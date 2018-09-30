@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+<style>
+    html, body {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+    }
+</style>
+
+
+<script type="text/javascript">
+
+    var url = location.search;
+    if (url.indexOf("?") != -1) {
+        str = url.substr(1);
+    }
+    var gisAPIip, buffer_url, initExtent, fullExtent, loadLayer;
+    function sendRequestByPost() {
+        //定义异步请求对象
+        var xmlReq;
+        //检测浏览器是否直接支持ajax
+        if (window.XMLHttpRequest) {//直接支持ajax
+            xmlReq = new XMLHttpRequest();
+        } else {//不直接支持ajax
+            xmlReq = new ActiveObject('Microsoft.XMLHTTP');
+        }
+        //设置回调函数
+        xmlReq.onreadystatechange = function () {
+            if (xmlReq.readyState == 4 && xmlReq.status == 200) {
+                try {
+                    //获取服务器的响应值
+                    var gisconfig = xmlReq.responseText;
+                    gisconfig = gisconfig.substr(1, gisconfig.length - 2);
+                    var temp = JSON.parse(gisconfig);
+                    var config = temp[str];
+                    if (config === undefined) {
+                        console.error("config获取不到", gisconfig);
+                    }
+                    gisAPIip = config.gisAPIip;
+                    buffer_url = config.bufferUrl;
+                    initExtent = config.initExtent;
+                    fullExtent = config.fullExtent;
+                    loadLayer = config.loadLayer;
+                } catch (e) {
+                }
+            }
+        };
+        //创建异步Post请求
+        var url = "configServlet";
+        xmlReq.open("POST", url, false);
+        xmlReq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        //发送请求
+        var data = "name=gis_2d_configList";
+        xmlReq.send(data);
+    }
+    sendRequestByPost();
+</script>
+<script src="2D/init.js"></script>
+<script type="text/javascript">
+    window.onload = function () {
+        init("map", function (obj) {
+            if (parent.gis_load_end) {
+                try {
+                    parent.gis_load_end(obj);
+                } catch (e) {
+                    console.error("gis_load_end方法内报错", e);
+                }
+            } else
+                console.error("GIS初始化 gis_load_end方法未定义")
+        });
+    }
+</script>
+
+<body class="claro">
+</body>
+</html>
