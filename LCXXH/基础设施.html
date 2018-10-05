@@ -5,6 +5,7 @@
 <title>基础设施</title>
 <script src="js/jquery-1.11.1.min.js"></script>
 <script src="js/jquery.layout-latest.js"></script>
+ <script src="js/gis.js"></script>
 <link href="css/common.css" rel="stylesheet">
 <style>
 	html,body{
@@ -153,7 +154,9 @@
 </style>
 </head>
 <body>
-	<div class="gis-container"></div>
+    <iframe src="/webgis/2Dgis.vm?config1" id="iframepage" class="gis-container" frameborder="0" scrolling="no" marginheight="0"
+        marginwidth="0"></iframe>
+	<!--<div class="gis-container"></div>-->
 	<div class="west-model">
         <div class="model-header">基础设施<div class="model-shrink"></div></div>
         <div class="model-content">
@@ -275,6 +278,7 @@
 
 <script>
 	$(function(){
+	    getjichuData();
         $('.base-btn').click(function(){
             if(!$(this).hasClass('selected')){
                 $(this).addClass('selected').siblings().removeClass('selected');
@@ -290,6 +294,8 @@
 
         $('.baseparts-list li').click(function(){
             $(this).addClass('selected').siblings().removeClass('selected');
+            //gis基础部件点击
+            addjichubujian($(this).text());
         })
 
         $('.model-shrink').click(function(){
