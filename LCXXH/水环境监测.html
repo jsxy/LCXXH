@@ -19,11 +19,10 @@
 
     .west-model{
         width: 355px;
+        height: calc(100% - 35px);
         position: absolute;
         top:15px;
         left:20px;
-        bottom: 20px;
-        background-color: #09254c;
         overflow: hidden;
     }
     .east-model{
@@ -36,9 +35,10 @@
     }
     .model-box{
         height: 50%;
-		padding-bottom: 10px;
         box-sizing: border-box;
         position: relative;
+		border: 1px solid #0072ff; 
+        background-color: #09254c;
     }
     .model-header{
         width: 428px;
@@ -47,8 +47,6 @@
 		background-color: #143e84;
 		color: #fff;
 		font-size: 18px;
-		border: 1px solid #0072ff;  
-		border-bottom: none;   
 		padding-left: 25px;     
 		border-radius: 3px 3px 0 0;         
     }
@@ -75,9 +73,6 @@
     }
 	.model-content{
 		height: calc(100% - 50px);
-		background: #09254c;
-		border: 1px solid #0072ff;  
-		border-top: none;   
 		position: relative;
         overflow: auto;
 	}
@@ -114,6 +109,14 @@
     .shjjc .model-header{
         width: 328px;
     }
+    .ztree-box{
+        width: 95%;
+        height: calc(100% - 20px);
+        box-sizing: border-box;
+        background-color: #0a3163;
+        margin: 10px auto;
+        overflow: auto;
+    }
 
 </style>
 </head>
@@ -123,13 +126,15 @@
         <div class="model-box shjjc">
             <div class="model-header">水环境监测<div class="model-shrink"></div></div>
             <div class="model-content">
-                <ul id="example" class="ztree"></ul>
+                <div class="ztree-box">
+                    <ul id="example" class="ztree"></ul>
+                </div>
             </div>
         </div>
     </div>
 	<div class="east-model">
         <div class="model-box yysyzl">
-            <div class="model-header">饮用水源质量监测
+            <div class="model-header"><span>水质检测器A_01</span>
                 <div class="model-shrink"></div>
             </div>
             <div class="model-content">
@@ -182,6 +187,8 @@
 
 <script>
 
+    var curMenu = null, treeObj = null;
+
     var setting = {
 		view : {
 			dblClickExpand : false,
@@ -189,7 +196,6 @@
 			showLine: false
 		},
 		callback: {
-			beforeClick:beforeClick,
 			onClick: onClick
 		}
 	};
@@ -236,7 +242,7 @@
 		},
 		{ name:"东阿县", open:false, iconSkin:"picon", 
             children: [
-                { name:"水质检测器C_01"},
+                { name:"水质检测器D_01"},
 				{ name:"水质检测器D_02"},
 				{ name:"水质检测器D_03"},
 				{ name:"水质检测器D_04"},
@@ -302,39 +308,38 @@
 	function getFont(treeId, node) {
 		return (!!node.highlight)?{color:"red","font-weight":"bold","text-decoration":"none"}:{color:"#fff","font-weight":"normal","text-decoration":"none"};
 	}
-	
-	function beforeClick(treeId, treeNode, clickFlag){
-		return ($(".list-table-input.edit").length == 0);
-	}
 
 	function onClick(event, treeId, treeNode, clickFlag) {
-		treeObj = $.fn.zTree.getZTreeObj("example");
 		nodes = treeObj.getSelectedNodes();
-		if(!treeNode.isParent){	
-			$(".level2.selected").removeClass("selected");
+        var name = nodes[0].name;
+        $('.yysyzl .model-header span').text(name);
+        if(!treeNode.isParent){	
+			$(".level1.selected").removeClass("selected");
 			$("#"+treeNode.tId).addClass("selected").siblings().removeClass("selected");				
-			$(".company-handle-btns").show();					
 		}
-	}
-	
-	function selectTree(vehicleCompanyId){
-        var treeObj = $.fn.zTree.getZTreeObj("example");
-        var nodes = treeObj.getNodeByParam("companyId", vehicleCompanyId, null);
-        if (nodes) {
-            treeObj.selectNode(nodes);
-            treeObj.expandNode(nodes, true, true, true);
-        }
+		$('.yysyzl .model-content tr:nth-child(2) td:nth-child(2)').text(Math.floor(Math.random()*15)+5);
+		$('.yysyzl .model-content tr:nth-child(3) td:nth-child(2)').text(Math.floor(Math.random()*11)+5);
+		$('.yysyzl .model-content tr:nth-child(4) td:nth-child(2)').text(Math.floor(Math.random()*30)+30);
+		$('.yysyzl .model-content tr:nth-child(5) td:nth-child(2)').text(Math.floor(Math.random()*20)+20);
+		$('.yysyzl .model-content tr:nth-child(6) td:nth-child(2)').text(Math.floor(Math.random()*50)+50);
+		$('.yysyzl .model-content tr:nth-child(7) td:nth-child(2)').text(Math.floor(Math.random()*40)+20);
+		$('.yysyzl .model-content tr:nth-child(8) td:nth-child(2)').text(Math.floor(Math.random()*20)+20);
 	}	
     
     $(function(){
 
         $.fn.zTree.init($("#example"), setting, zNodes);
+        treeObj = $.fn.zTree.getZTreeObj("example");
+        curMenu = treeObj.getNodes()[0].children[0];
+        treeObj.selectNode(curMenu);
+        $("#" +curMenu.tId).addClass("selected");
 
         $('.model-shrink').click(function(){
             if($(this).hasClass('down')){
                 $(this).removeClass('down');
                 $(this).parent().next().slideDown();
-                $(this).parents('.model-box').css('height','50%');
+                var height = ( $(this).parents('.model-box').hasClass('yysyzl')?'50%':'100%');
+                $(this).parents('.model-box').css('height',height);
             }else{
                 $(this).addClass('down');
                 $(this).parent().next().slideUp();

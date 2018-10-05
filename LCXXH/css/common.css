@@ -94,47 +94,48 @@ body{
 .ztree{
     padding: 10px 0 30px 0;
 }
+.ztree li{    
+    line-height: 30px;
+    margin: 0;
+}
 .ztree li ul {
     padding: 0; 
 }
 .ztree li a{
     color: #FFF;
+    height: 30px;
     padding: 0;
 }
 .ztree li a.curSelectedNode{
+    height: 30px;
     background-color: transparent;
     border: none;
-    color: #06C7DC!important;
+    color: #fff;
 }
 .ztree li span.button.noline_open{
     background-image: url("../images/ztree.png");
     background-position: -18px 0px;
 }
 .ztree li span.button.noline_close{
-    background-image: url("images/ztree.png");
+    background-image: url("../images/ztree.png");
     background-position: 0px 0px;
 }
 .ztree li span.button.picon_ico_open{
     margin-right: 6px;
     background: url("../images/ztree.png") no-repeat scroll 0px -18px transparent;
-    vertical-align: top;
+    vertical-align: middle;
 }
 .ztree li span.button.picon_ico_close{
     margin-right: 6px;
     background: url("../images/ztree.png") no-repeat scroll -16px -18px transparent;
-    vertical-align: top;
+    vertical-align: middle;
 }
 .ztree li span.button.cicon_ico_docu{
     width: 2px;
     background: url("../images/ztree.png") no-repeat scroll -32px -18px transparent;
 }
-.ztree li a.level2{
-    width:200px;
-    padding-left:40px;
-}
-.ztree li.level2.selected{
-    background:#18516b;
-    color:#14b4df;
+.ztree li.selected{
+    background:#0072ff;
 }
 .ztree li span.button.level0.switch {
     margin-left: 20px;
