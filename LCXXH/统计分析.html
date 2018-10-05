@@ -1,0 +1,702 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>统计分析</title>
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/echarts.js"></script>
+<link href="css/common.css" rel="stylesheet">
+<style>
+	html,body{
+		width: 100%;
+		height: 100%;
+	}
+	body{
+		border: 8px solid #05172f;
+		border-width: 8px 0;
+		padding: 10px 0 0 10px;
+		box-sizing: border-box;
+	}
+	.model-box{
+		width: 33.33%;
+		height: 50%;
+		float: left;
+		padding: 0 10px 10px 0;
+		box-sizing: border-box;
+	}
+	.model-box.gjcdsj{
+		width: 66.66%;
+	}
+	.chart-container{
+		height: 100%;
+		position: relative;
+	}
+	.model-header{
+		height: 50px; 
+		line-height: 50px; 
+		background-color: #143e84;
+		color: #fff;
+		font-size: 18px;
+		border-bottom: none;   
+		padding-left: 25px;   
+		border: 1px solid #0072ff;  
+		border-bottom: none;     
+		border-radius: 3px 3px 0 0;
+	}
+	.model-header:before{
+		content: '';
+		display: inline-block;
+		width: 5px;
+		height: 20px;
+        background: url(./images/icon_base.png) no-repeat -230px 1px;
+		position: absolute;
+		left: 12px;
+		top: 17px;
+	}
+	.model-content{
+		height: calc(100% - 50px);
+		background: #09254c;
+		border: 1px solid #0072ff;  
+		border-top: none;   
+		position: relative;
+	}
+	.base-btns{	
+		margin: 15px 15px 0 0;
+		float: right;
+	}
+	.ndtbfx .base-btns{
+		position: absolute;
+		bottom: 10px;
+		left: 50%;
+		margin-left: -155px;
+	}
+	.base-btn{
+		height: 38px;
+		line-height: 38px;
+	}
+	.clear{
+		clear: both;
+	}
+	.timely-data{
+		font-size: 18px;
+		color: #8dace0;
+		position: absolute;
+		top: 60px;
+		right: 80px;
+		z-index: 99;
+	}
+	.timely-data span{
+		font-size: 32px;
+		color: #fff;
+		margin-left: 10px;
+	}
+	#line_chart,#pie_chart,#bar_chart_h,#bar_chart_v,#circle_chart{
+		width: 100%;
+		height: calc(100% - 65px);
+	}
+
+	.east-model{
+		width: 365px;
+		position: absolute;
+		right: 10px;
+		top: 10px;
+		bottom: 0px;
+	}
+	table.monitor-tab{
+		width: 100%;
+		height: 100%;
+		border-collapse: collapse;
+	}
+	.monitor-tab tr:first-child{
+		border-bottom: 1px solid #454e81;
+	}
+	.monitor-tab tr td:first-child{
+		border-right: 1px solid #454e81;
+	}
+	.attr-box{
+		width: 100%;
+		height: 62px;
+	}
+	.attr-icon{
+		width: 35%;
+		height: 100%;
+		float: left;
+	}
+	.temp .attr-icon{
+		background: url(./images/icon_temp.png) no-repeat 24px center;
+	}
+	.wet .attr-icon{
+		background: url(./images/icon_wet.png) no-repeat 24px center;
+	}
+	.wind .attr-icon{
+		background: url(./images/icon_wind.png) no-repeat 24px center;
+	}
+	.pressure .attr-icon{
+		background: url(./images/icon_pressure.png) no-repeat 24px center;
+	}
+	.attr-name{
+		width: 65%;
+		height: 50%;
+		text-align: center;
+		color: #949fd6;
+		float: left;
+	}
+	.attr-num{
+		width: 60%;
+		height: 50%;
+		text-align: center;
+		color: #fff;
+		float: left;		
+	}
+	#gauge_chart{
+		width: 100%;
+		height: calc(100% - 100px);
+	}
+	.air-quality{
+		width: 100%;
+		height: 100px;
+	}
+	.air-quality td{
+		padding: 0 5px;
+		color: #fff;
+		font-size: 14px;
+	}
+	.air-quality td:nth-child(1),.air-quality td:nth-child(3){
+		text-align: right;
+		color: #949fd6;
+	}
+	.circle_box{
+		width: calc(100% - 162px);
+		height: 100%;
+		float: left;
+		position: relative;
+	}
+	.circle-info{
+		width: 161px;
+		height: 100%;
+		border-left:1px solid #0072ff;
+		float: left;
+	}
+	.circle-info div{
+		height: 33.33%;
+		border-bottom: 1px solid #0072ff;
+		text-align: center;
+		padding: 10px 0;
+		box-sizing: border-box;
+	}
+	.circle-info div:last-child{
+		border-bottom: none;
+	}
+	.circle-info div span{
+		display: inline-block;
+		line-height: 30px;
+		color: #8492a6;
+		font-size: 16px;
+	}
+	.circle-info div span:first-child{
+		width: 10px;
+		height: 10px;
+		border-radius: 10px;
+		background-color: #1dd9f5;
+	}
+	.circle-info div.lastYear span:first-child{
+		background-color: #fff000;
+	}
+	.circle-info div.yearBeforeLast span:first-child{
+		background-color: #c7113a;
+	}
+	.circle-info div span:last-child{		
+		color: #fff;
+		font-size: 32px;
+	}
+
+	.model-header .time-select{
+		margin: 5px 15px;
+	}
+
+</style>
+</head>
+<body>
+	<div class="model-box ssjcsj">
+		<div class="chart-container">
+			<div class="model-header">实时监测数据(<span>Wm³</span>)			
+				<div class="time-select">
+					<select>
+						<option selected>东昌府区</option>
+						<option>茌平县</option>
+						<option>东阿县</option>
+						<option>冠县</option>
+						<option>高唐县</option>
+						<option>阳谷县</option>
+						<option>莘县</option>
+					</select>
+				</div>
+			</div>
+			<div class="model-content"> 
+				<div class="base-btns">
+					<div class="base-btn water selected">供水</div>
+					<div class="base-btn electric">供电</div>
+					<div class="base-btn heat">供热</div>
+				</div>
+				<div class="clear"></div>
+				<div class="timely-data">当前值<span>23.25</span></div>
+				<div id="line_chart"></div>
+			</div>
+		</div>
+	</div>
+	<div class="model-box nhytfx">
+		<div class="chart-container">
+			<div class="model-header">能耗用途分析				
+				<div class="time-select">
+					<select>
+						<option>2018年1月</option>
+						<option>2018年2月</option>
+						<option>2018年3月</option>
+						<option>2018年4月</option>
+						<option>2018年5月</option>
+						<option>2018年6月</option>
+						<option>2018年7月</option>
+						<option>2018年8月</option>
+						<option>2018年9月</option>
+						<option selected>2018年10月</option>
+					</select>
+				</div>
+			</div>
+			<div class="model-content">
+				<div class="base-btns">
+					<div class="base-btn water selected">供水</div>
+					<div class="base-btn electric">供电</div>
+					<div class="base-btn heat">供热</div>
+				</div>	
+				<div class="clear"></div>
+				<div id="pie_chart"></div>
+			</div>
+		</div>			
+	</div>
+	<div class="model-box qxnhph">
+		<div class="chart-container">
+			<div class="model-header">各区县能耗排行
+				<div class="time-select">
+					<select>
+						<option>2018年1月</option>
+						<option>2018年2月</option>
+						<option>2018年3月</option>
+						<option>2018年4月</option>
+						<option>2018年5月</option>
+						<option>2018年6月</option>
+						<option>2018年7月</option>
+						<option>2018年8月</option>
+						<option>2018年9月</option>
+						<option selected>2018年10月</option>
+					</select>
+				</div>
+			</div>
+			<div class="model-content">	
+				<div class="base-btns">
+					<div class="base-btn water selected">供水</div>
+					<div class="base-btn electric">供电</div>
+					<div class="base-btn heat">供热</div>
+				</div>		
+				<div class="clear"></div>
+				<div id="bar_chart_h"></div>
+			</div>
+		</div>			
+	</div>
+	<div class="model-box ndtbfx">
+		<div class="chart-container">
+			<div class="model-header">年度同比分析(<span>Wm³</span>)</div>
+			<div class="model-content">	
+				<div class="circle_box">
+					<div id="circle_chart"></div>		
+					<div class="base-btns">
+						<div class="base-btn water selected">供水</div>
+						<div class="base-btn electric">供电</div>
+						<div class="base-btn heat">供热</div>
+					</div>
+				</div>
+				<div class="circle-info">		
+					<div class="thisYear">
+						<span></span><br>
+						<span>2018年</span><br>
+						<span>1254</span>
+					</div>
+					<div class="lastYear">
+						<span></span><br>
+						<span>2017年</span><br>
+						<span>1102</span>
+					</div>
+					<div class="yearBeforeLast">
+						<span></span><br>
+						<span>2016年</span><br>
+						<span>1345</span>
+					</div>	
+				</div>	
+			</div>	
+		</div>
+	</div>
+	<div class="model-box gjcdsj">
+		<div class="chart-container">
+			<div class="model-header">能耗月度图(<span>Wm³</span>)
+				<div class="time-select">
+					<select>
+						<option>2018年1月</option>
+						<option>2018年2月</option>
+						<option>2018年3月</option>
+						<option>2018年4月</option>
+						<option>2018年5月</option>
+						<option>2018年6月</option>
+						<option>2018年7月</option>
+						<option>2018年8月</option>
+						<option>2018年9月</option>
+						<option selected>2018年10月</option>
+					</select>
+				</div>
+			</div>
+			<div class="model-content">
+				<div class="base-btns">
+					<div class="base-btn water selected">供水</div>
+					<div class="base-btn electric">供电</div>
+					<div class="base-btn heat">供热</div>
+				</div>
+				<div class="clear"></div>
+				<div id="bar_chart_v"></div>
+			</div>
+		</div>			
+	</div>
+</body>
+
+<script>
+	$(function(){					
+
+		var line_option = {
+			color:["#56baca"],
+			tooltip:{trigger:'axis'},
+			grid:{
+				x:60,
+				y:60,
+				x2:50,
+				y2:50
+			},
+			xAxis:[{
+				type:'category',
+				axisLine:{                        
+					lineStyle : {
+						color : '#1dd9f5'
+					}
+				}, 
+				splitLine:{
+					show:false
+				},
+				axisLabel:{    
+					interval:0,                    
+					textStyle : {
+						color : '#fff',
+						fontFamily : '微软雅黑'
+					}
+				}, 
+				axisTick:{
+					show:false
+				},               
+				boundaryGap : false,
+				data:['00:00','03:00','06:00','09:00','12:00','15:00','18:00','21:00']
+			}],
+			yAxis:[{
+				type:'value',
+				axisLine:{                        
+					lineStyle : {
+						color : '#1d6c7b'
+					}
+				},
+				axisLabel:{                        
+					textStyle : {
+						color : '#fff',
+						fontFamily : '微软雅黑'
+					}
+				},
+				splitLine:{
+					show:false
+				},
+				axisTick:{
+					show:false
+				}
+			}],
+			series:[{
+				name:'7日客流量',
+				type:'line',
+				symbol:'emptyCircle',
+				symbolSize:10,
+				itemStyle: {
+					normal: {
+						lineStyle: {
+							width: 4
+						}
+					}
+				},
+				data:[23,14,48,21,45,28,21,32]
+			}]
+		};
+
+		var pie_option = {
+			color:['#1dd9f5','#c7113a','#fff000','#19b596'],
+			title: {
+				text: '2018-10',
+				x: 'center',
+				y: 'center',
+				textStyle : {
+					color : '#fff',
+					fontFamily : '微软雅黑',
+					fontSize : 16
+				}
+			},
+			tooltip : {
+				trigger: 'item',
+				formatter: "{a} <br/>{b} : {c} ({d}%)"
+			},
+			calculable : false,
+			series : [{
+				name:'能耗用途分析',
+				type:'pie',
+				roseType: 'radius',
+				radius : ['55%', '75%'],
+				data:[{value:25, name:'Ⅳ类'},{value:30, name:'Ⅲ类'},{value:40, name:'Ⅱ类'},{value:50, name:'Ⅰ类'}]
+			}]
+		};
+
+		var bar_h_option = {
+			color:['#fff000'],
+			tooltip : {
+				trigger: 'axis'
+			},
+			grid:{
+				x:100,
+				y:20,
+				x2:30,
+				y2:25
+			},
+			xAxis : [{
+				type : 'value',
+				show:false
+			}],
+			yAxis : [{
+				type : 'category',   
+				axisLine:{
+					show:false
+				},                 
+				axisLabel:{                        
+					textStyle : {
+						color : '#fff',
+						fontFamily : '微软雅黑'
+					}
+				},
+				data : ['莘县','阳谷县','高唐县','冠县','东阿县','茌平县','临清市','东昌府区']
+			}],
+			series : [{
+				name:'2011年',
+				type:'bar',
+				barWidth: 12,                    
+				itemStyle : {
+					normal : {
+						barBorderRadius:[6,6,6,6]
+					}
+				},
+				data:[29203, 46383, 53489, 61989, 79034, 104970, 124230, 131744]
+			}]
+		}; 
+
+		
+		var dataStyle = {
+			normal: {
+				label: {show:false},
+				labelLine: {show:false}
+			}
+		};
+		var labelOther = {
+			normal : {
+				color: '#143e84',
+				label: {show:false},
+				labelLine: {show:false}
+			}
+		};
+		var circle_option = {
+			color:['#1dd9f5','#fff000','#c7113a'],
+			tooltip : {
+				show: true,
+				formatter: "{a} <br/>{b} : {c} ({d}%)"
+			},
+			series : [{
+				name:'年度同比分析',
+				type:'pie',
+				radius : ['75%', '85%'],
+				itemStyle : dataStyle,
+				data:[
+					{value:74,name:'all',itemStyle : labelOther },
+					{value:26,name:'2018年'}
+				]},{
+				name:'年度同比分析',
+				type:'pie',
+				radius : ['55%','65%'],
+				itemStyle : dataStyle,
+				data:[
+					{value:53,name:'all',itemStyle : labelOther},
+					{value:47,name:'2017年'}
+				]},{
+				name:'年度同比分析',
+				type:'pie',
+				radius : ['35%','45%'],
+				itemStyle : dataStyle,
+				data:[
+					{value:67,name:'all',itemStyle : labelOther},
+					{value:33, name:'2016年'}
+				]}
+			]
+		};
+
+		var bar_v_option = {
+			color:['#1dd9f5'],
+			tooltip : {
+				trigger: 'axis'
+			},
+			grid:{
+				x:70,
+				y:20,
+				x2:30,
+				y2:50
+			},
+			yAxis : [{
+				type : 'value',				
+				axisLine:{                        
+					lineStyle : {
+						color : '#394071'
+					}
+				}, 	
+				axisLabel:{                       
+					textStyle : {
+						color : '#fff',
+						fontFamily : '微软雅黑'
+					}
+				},		
+				splitLine:{                        
+					lineStyle : {
+						color : '#172d57'
+					}
+				}, 
+			}],
+			xAxis : [{
+				type : 'category',   						
+				axisLine:{                        
+					lineStyle : {
+						color : '#172d57'
+					}
+				},                 
+				axisLabel:{                        
+					textStyle : {
+						color : '#fff',
+						fontFamily : '微软雅黑'
+					}
+				},
+				data :(function () {
+					var d = [];
+					var date = new Date(2018,10,0).getDate();
+					for(var i=1;i<=date;i++){
+						d.push(i);
+					}
+					return d;
+				})()
+			}],
+			series : [{
+				name:'监测点数据',
+				type:'bar',
+				barWidth: 12,                    
+				itemStyle : {
+					normal : {
+						barBorderRadius:[6,6,6,6]
+					}
+				},
+				data:[118,94,83,64,23,56,35,75,87,34,75,34,24,65,25,74,53,74,86,89,53,57,72,93,104,34,52,15,84,67,48]
+			}]
+		}; 
+
+		var line_chart = echarts.init(document.getElementById("line_chart"));
+		line_chart.setOption(line_option); 
+
+		var pie_chart = echarts.init(document.getElementById("pie_chart")); 
+		pie_chart.setOption(pie_option);
+
+		var bar_chart_h = echarts.init(document.getElementById("bar_chart_h")); 
+		bar_chart_h.setOption(bar_h_option);
+
+		var circle_chart = echarts.init(document.getElementById("circle_chart")); 
+		circle_chart.setOption(circle_option);	
+
+		var bar_chart_v = echarts.init(document.getElementById("bar_chart_v")); 
+		bar_chart_v.setOption(bar_v_option);	
+
+		$('.base-btn').click(function(){
+            if(!$(this).hasClass('selected')){
+                $(this).addClass('selected').siblings().removeClass('selected');
+				changeChartData(this);
+            }
+        })       
+
+		$('.time-select').change(function(){
+			changeChartData(this);
+		})  
+			
+		function changeChartData(that){
+			var parents = $(that).parents('.model-box');
+			if(parents.hasClass('ssjcsj')){					
+				var data = [Math.floor(Math.random()*35)+10, Math.floor(Math.random()*35)+10,Math.floor(Math.random()*35)+10, Math.floor(Math.random()*35)+10, Math.floor(Math.random()*35)+10,Math.floor(Math.random()*35)+10,Math.floor(Math.random()*35)+10,Math.floor(Math.random()*35)+10];
+				$('.timely-data span').text((Math.random()*30+10).toFixed(2));					
+				line_option.series[0].data = data;
+				line_chart.setOption(line_option,true); 
+			}else if(parents.hasClass('nhytfx')){
+				var data = [{value:Math.random()*40+10, name:'Ⅳ类'},
+							{value:Math.random()*40+10, name:'Ⅲ类'},
+							{value:Math.random()*40+10, name:'Ⅱ类'},
+							{value:Math.random()*40+10, name:'Ⅰ类'}];
+				pie_option.series[0].data = data;
+				pie_chart.setOption(pie_option); 
+			}else if(parents.hasClass('qxnhph')){
+				var data = [Math.floor(Math.random()*100)+20, ,Math.floor(Math.random()*15000)+30000, Math.floor(Math.random()*15000)+45000, Math.floor(Math.random()*15000)+50000,Math.floor(Math.random()*15000)+65000,Math.floor(Math.random()*15000)+80000,Math.floor(Math.random()*15000)+95000];;
+				bar_h_option.series[0].data = data;
+				bar_chart_h.setOption(bar_h_option,true); 
+			}else if(parents.hasClass('gjcdsj')){
+				var dates =$('.gjcdsj .time-select select').val().match(/\d+/g);
+				var days =  new Date(dates[0],dates[1],0).getDate();
+				var data = [];
+				for(var i =1;i<=days;i++){
+					data.push(Math.floor(Math.random()*100)+20);
+				}
+				bar_v_option.series[0].data = data;
+				bar_chart_v.setOption(bar_v_option,true); 
+			}else if(parents.hasClass('ndtbfx')){
+				var data = {
+					'thisYear':[{value:Math.random()*80+20,name:'all',itemStyle : labelOther},{value:Math.random()*80+20, name:'2018年'}],
+					'lastYear':[{value:Math.random()*80+20,name:'all',itemStyle : labelOther},{value:Math.random()*80+20, name:'2017年'}],
+					'yearBeforeLast':[{value:Math.random()*80+20,name:'all',itemStyle : labelOther},{value:Math.random()*80+20, name:'2016年'}]
+				};
+				circle_option.series[0].data = data.thisYear;
+				circle_option.series[1].data = data.lastYear;
+				circle_option.series[2].data = data.yearBeforeLast;
+				circle_chart.setOption(circle_option,true); 
+				$('.thisYear span:last-child').text(Math.floor(Math.random()*500)+1000);
+				$('.lastYear span:last-child').text(Math.floor(Math.random()*500)+1000);
+				$('.yearBeforeLast span:last-child').text(Math.floor(Math.random()*500)+1000);
+			}else if(parents.hasClass('gjcdsj')){
+				var dates =$('.gjcdsj .time-select select').val().match(/\d+/g);
+				var days =  new Date(dates[0],dates[1],0).getDate();
+				var data = [];
+				for(var i =1;i<=days;i++){
+					data.push(Math.floor(Math.random()*100)+20);
+				}
+				bar_v_option.series[0].data = data;
+				bar_chart_v.setOption(bar_v_option,true); 
+			}			
+			var text = ($(that).hasClass('water')?'Wm³':($(that).hasClass('heat')?'MJ':'MW'));
+			$(that).parents('.model-box').find('.model-header span').text(text);
+		}
+	});
+
+
+</script>
+</html>

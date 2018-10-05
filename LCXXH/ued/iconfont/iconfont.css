@@ -1,0 +1,51 @@
+
+@font-face {font-family: "iconfont";
+  src: url('iconfont.eot?t=1459168078'); /* IE9*/
+  src: url('iconfont.eot?t=1459168078#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1459168078') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1459168078') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1459168078#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-fanhui:before { content: "\e618"; }
+.icon-shanchu:before { content: "\e600"; }
+.icon-fuwu:before { content: "\e60f"; }
+.icon-home:before { content: "\e610"; }
+.icon-xitong:before { content: "\e611"; }
+.icon-gongxian:before { content: "\e60b"; }
+.icon-chaxun:before { content: "\e604"; }
+.icon-shuaxin:before { content: "\e60d"; }
+.icon-redis:before { content: "\e612"; }
+.icon-logout:before { content: "\e608"; }
+.icon-wendang:before { content: "\e60a"; }
+.icon-mail:before { content: "\e609"; }
+.icon-circle:before { content: "\e617"; }
+.icon-xiugai:before { content: "\e602"; }
+.icon-caretdown:before { content: "\e60e"; }
+.icon-git:before { content: "\e607"; }
+.icon-yingyong:before { content: "\e61a"; }
+.icon-zengjiaxiang:before { content: "\e603"; }
+.icon-kafka:before { content: "\e619"; }
+.icon-hadoop:before { content: "\e613"; }
+.icon-zookeeper:before { content: "\e614"; }
+.icon-fenpei:before { content: "\e605"; }
+.icon-zhuxiao:before { content: "\e61b"; }
+.icon-home1:before { content: "\e61c"; }
+.icon-list-line:before { content: "\e61e"; }
+.icon-dizhi:before { content: "\e61f"; }
+.icon-shuoming:before { content: "\e60c"; }
+.icon-caidanfenpei:before { content: "\e606"; }
+.icon-alarm:before { content: "\e615"; }
+.icon-zhanghaotouxiang:before { content: "\e601"; }
+.icon-3dashuju:before { content: "\e621"; }
+.icon-jiedian:before { content: "\e616"; }
+.icon-jiantouarrow490:before { content: "\e620"; }
+.icon-03fenxiang:before { content: "\e61d"; }

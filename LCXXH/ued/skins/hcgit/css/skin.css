@@ -1,0 +1,23 @@
+@CHARSET "UTF-8";
+
+html, body {
+  height: 100%;
+}
+ul, li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.repo-list-item {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.closed-banner {
+  position: relative;
+  margin: 15px 0 -15px;
+  height: 19px;
+  overflow: visible;
+  background: #f3f3f3;
+  border-radius: 0;
+  border-bottom: 15px solid #fff;
+}

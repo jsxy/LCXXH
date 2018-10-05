@@ -1,0 +1,147 @@
+*{margin:0;padding:0;font-family:"微软雅黑";}
+
+/*滚动条*/
+::-webkit-scrollbar{
+    width:6px;
+    box-shadow:inset 3px 3px 5px #071836;
+    border-radius:8px;
+}
+::-webkit-scrollbar-button{
+    display:none;
+}
+::-webkit-scrollbar-track{
+    height:100%;
+}
+::-webkit-scrollbar-thumb{
+    border-radius:6px;
+    background-color:#093076;
+}
+
+a,a:hover{
+    text-decoration: none;
+}
+
+ul,li{
+    list-style: none;
+}
+
+body{
+	background: #09254c;
+}
+
+.ui-layout-pane{
+	background:transparent;
+}
+
+.gis-container{
+    width: 100%;
+    height: 100%;
+    background: url(../images/gis-bg1.png) no-repeat center center;
+    background-size: 100% 100%;
+}
+
+
+.base-btns{
+    display: inline-block;
+}
+.base-btn{
+    height: 32px;
+    line-height: 32px;
+    text-align-last: center;
+    border: 1px solid #0072ff;
+    background-color: transparent;
+    color: #fff;
+    margin: 0 5px 10px 5px;
+    float: left;
+    cursor: pointer;
+}
+.base-btn:hover,.base-btn.selected{
+    background-color: #0072ff;
+}
+.baseParts,.pipe{
+    width: 138px;
+}
+.heat,.water,.electric{
+    width: 88px;
+}
+.time-select{
+    width: 164px;
+    height: 38px;
+    background: transparent;
+    border: 1px solid #0072ff;
+    float: right;
+    text-align: center;
+    margin: 15px 5px 0 0;
+    position: relative;
+}
+.time-select select{
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    text-align-last: center;
+    background: transparent;
+    color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.time-select select option{
+    background: #05172f;
+}
+
+/* ztree */
+.ztree{
+    padding: 10px 0 30px 0;
+}
+.ztree li ul {
+    padding: 0; 
+}
+.ztree li a{
+    color: #FFF;
+    padding: 0;
+}
+.ztree li a.curSelectedNode{
+    background-color: transparent;
+    border: none;
+    color: #06C7DC!important;
+}
+.ztree li span.button.noline_open{
+    background-image: url("../images/ztree.png");
+    background-position: -18px 0px;
+}
+.ztree li span.button.noline_close{
+    background-image: url("images/ztree.png");
+    background-position: 0px 0px;
+}
+.ztree li span.button.picon_ico_open{
+    margin-right: 6px;
+    background: url("../images/ztree.png") no-repeat scroll 0px -18px transparent;
+    vertical-align: top;
+}
+.ztree li span.button.picon_ico_close{
+    margin-right: 6px;
+    background: url("../images/ztree.png") no-repeat scroll -16px -18px transparent;
+    vertical-align: top;
+}
+.ztree li span.button.cicon_ico_docu{
+    width: 2px;
+    background: url("../images/ztree.png") no-repeat scroll -32px -18px transparent;
+}
+.ztree li a.level2{
+    width:200px;
+    padding-left:40px;
+}
+.ztree li.level2.selected{
+    background:#18516b;
+    color:#14b4df;
+}
+.ztree li span.button.level0.switch {
+    margin-left: 20px;
+}
+.ztree li span.button.level1.switch {
+    margin-left: 24px;
+}
+.ztree li span{
+    font-size: 14px;
+}

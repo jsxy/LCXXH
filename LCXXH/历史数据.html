@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>历史数据</title>
+    <link href="ued/framework/styles/kendo.common.min.css" rel="stylesheet"/>
+    <link href="ued/framework/styles/kendo.default.min.css" rel="stylesheet"/>
+    <link href="css/layout-default-latest.css" rel="stylesheet">
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/jquery.layout-latest.js"></script>
+    <script src="ued/framework/js/kendo.all.min.js"></script>
+    <link href="css/common.css" rel="stylesheet">
+    <style>
+    body{
+        border: 8px solid #05172f;
+        border-width: 8px 0;
+        /* box-sizing: border-box; */
+    }
+	.search_input{
+		width: 250px;
+		height: 30px;
+		line-height: 30px;
+		border: 1px solid #00b4ff;
+		float: left;
+	}
+	.search_btn,.search_input input,.k-button.k-grid-add{
+		height: 30px;
+		line-height: 30px;
+		outline: none;
+		font-size: 16px;
+    	float: left;
+	}
+	.search_input input{
+		width: 98%;
+		padding: 0 1%;
+		background: transparent;
+		border: none;
+	}
+	.search_btn{
+		width: 60px;
+		height: 32px;
+		line-height: 32px;
+		background: #26c1e5;
+		color: #0a244f;
+		border: none;
+		cursor: pointer;
+	}
+	.search_btn:hover{
+		box-shadow: 1px 0px 10px #26c1e5;
+	}
+	#history_grid{
+		width:100%;
+		height: 100%;
+	}
+
+	/* grid */
+	.k-icon{
+		background-image: url(ued/framework/styles/Black/sprite.png);
+	}
+	.k-grid.k-widget,.k-grid-header{
+		background: transparent;
+		border-color: transparent;
+	}
+	div.k-grid-header{
+		border-bottom-width: 0;
+	}
+	.k-grid-header-wrap{
+		border-color: transparent;
+	}
+	.k-grid-header-wrap>table,.k-grid-content table{
+		border-collapse: collapse;
+	}
+	.k-grid-header th.k-header:first-child,.k-grid tbody td:first-child{
+		border-left-width: 2px;
+	}
+	.k-grid-header th.k-header,.k-grid td.hgc_table_cell{
+		padding-top: 0;
+		padding-bottom: 0;
+		border: 2px solid #204a90;
+		color: #fff;
+		font-size: 16px;
+		text-align: center;
+	}
+	.k-grid-header th.k-header{
+		line-height: 44px;
+		background: #143e84;
+	}
+	.k-grid tr:hover{
+		background: #335794;
+	}
+	.k-grid tr.k-state-selected:hover,.k-grid tr.k-state-selected{
+		background: #335794;
+	}
+	.k-grid td.hgc_table_cell{
+		line-height: 46px;
+	}
+	.k-grid .k-pager-wrap{
+		background: transparent;
+		border-color: transparent;
+	}
+	.k-pager-wrap.k-grid-pager{
+		padding: 1em 0 0 0;
+	}
+	.k-grid .k-button{
+		padding: 0;
+	}
+	.k-button:active,.k-button:hover,.k-button:active:hover,.k-button:focus{
+		border: 1px solid #26c1e5!important;
+		box-shadow: 1px 0px 25px rgba(38,193,229,0.55) inset!important;
+		background: transparent!important;
+		border-color: #00b4ff;
+		color: #fff;
+	}
+	.k-button.k-button-icontext .k-icon{
+		vertical-align: middle;
+	}
+	.k-detail{
+		background-position: -160px -240px;
+	}
+	.k-grid .k-pager-wrap a.k-pager-nav{
+		display: none;
+	}
+	.k-grid a.k-pager-nav.k-pager-first,.k-grid a.k-pager-nav.k-pager-last{
+		display: block;
+		padding: 0 5px;
+	}
+	.k-grid a.k-pager-nav.k-pager-last{
+		border-left: none;
+	}
+	.k-pager-wrap>.k-link,.k-pager-numbers .k-link{
+		border-radius: 0px;
+		margin: 0;
+		border-color: #00b4ff;
+	}
+	.k-pager-numbers .k-link{
+		border-left: 0;
+	}
+	.k-pager-wrap{
+		color: #fff;
+	}
+	.k-pager-wrap>.k-link:hover{
+		background: #26c1e5;
+		border-color: #00b4ff;
+	}
+	.k-grid .k-pager-numbers{
+		margin: 0 0 0 -1px;
+	}
+	.k-link:link, .k-link:visited, .k-nav-current.k-state-hover .k-link{
+		color: #fff;
+	}
+	.k-pager-numbers .k-state-selected,.k-pager-numbers .k-link:hover{
+		border-radius: 0;
+		background: #26c1e5;
+		border-color: #00b4ff;
+		color: #071836;
+		margin: 0;
+	}
+	.k-pager-numbers .k-link, .k-pager-numbers .k-state-selected, .k-pager-wrap>.k-link{
+		min-width: 3em;
+	}
+	.k-link.k-pager-nav .k-icon{
+		background: transparent;
+		font-size: 16px;
+		min-width: 3em;
+		height: 100%;
+		line-height: 32px;
+		vertical-align: bottom;
+	}
+	.k-link.k-pager-nav .k-icon:before{
+		content: "";
+	}	
+	.k-edit-form-container .k-button.k-grid-cancel{
+		background: transparent;
+	}
+	.k-grid-pager{
+		display: inline-block;
+	}
+	.k-pager-input{
+		float: right;
+	}
+	.k-pager-wrap .k-textbox,.k-pager-wrap .k-textbox:hover{
+		height: 28px;
+		line-height: 28px;
+		padding: 0;
+		background: transparent;
+		color: #fff;
+		border-color: #00b4ff;
+		border-radius: 0;
+	}
+	.k-alt{
+		background-color: #062955;
+	}
+
+	.base-btn {
+		width: 172px;
+		height: 48px;
+		line-height: 48px;
+		border: 1px solid #0072ff;
+		background-color: transparent;
+		color: #fff;
+		margin-right:8px;
+		float: left;
+		cursor: pointer;
+	}	
+	.time-select{
+		height: 48px;
+		line-height: 48px;
+    	margin: 0px 8px 0 0;
+		float: left;
+	}
+    </style>
+</head>
+<body> 
+    <div class="ui-layout-north" style="padding: 20px 25px;">  
+		<div class="base-btn">基础部件</div>
+		<div class="time-select type">
+			<select>
+				<option>供水泵站</option>
+				<option>排水泵站</option>
+				<option>消防栓</option>
+				<option>加压站</option>
+				<option>水表箱</option>
+				<option>窖井</option>
+				<option>流量监测点</option>
+				<option>水质监测点</option>
+				<option>压力监测点</option>
+				<option>排水检测点</option>
+			</select>
+		</div>
+		<div class="time-select equip">
+			<select>
+				<option selected>加压站_A01</option>
+				<option>加压站_A02</option>
+				<option>加压站_B01</option>
+				<option>加压站_B02</option>
+				<option>加压站_C01</option>
+				<option>加压站_C02</option>
+				<option>加压站_D01</option>
+				<option>加压站_D02</option>
+				<option>加压站_A01</option>
+				<option>加压站_E02</option>
+			</select>
+		</div>
+    </div> 
+    <div class="ui-layout-center" style="padding: 0 25px 20px;overflow: hidden;">
+		<div id="history_grid"></div>  
+    </div>
+    <script> 
+		var _constants = {
+			DATA_GRID_NUMBER_START: 0
+		};
+
+        $(function(){
+            $('body').layout({
+				defaults:{
+					resizable: false,
+					closable: false,
+					spacing_open: 0
+				},
+				north:{
+					size: 90
+				},
+				onresize_end : function(){
+					$("#history_grid").data("kendoGrid").resize();
+				}
+			});
+
+			 var data = [
+				{name:"加压站_A01",type:"press",equipID:'A03B02_E01',status:1,alarmTime:'2018-10-07 18:45:32',alarmNum:60,position:"通河路江陵路交叉口"},
+				{name:"加压站_A01",type:"press",equipID:'A03B02_E01',status:1,alarmTime:'2018-10-02 08:45:32',alarmNum:60,position:"通河路江陵路交叉口"},
+				{name:"加压站_A01",type:"press",equipID:'A03B02_E01',status:1,alarmTime:'2018-09-23 15:45:32',alarmNum:45,position:"通河路江陵路交叉口"},
+				{name:"加压站_A01",type:"press",equipID:'A03B02_E01',status:1,alarmTime:'2018-09-21 24:45:32',alarmNum:70,position:"通河路江陵路交叉口"},
+				{name:"加压站_A01",type:"press",equipID:'A03B02_E01',status:1,alarmTime:'2018-09-19 07:45:32',alarmNum:52,position:"通河路江陵路交叉口"},
+				{name:"加压站_A01",type:"press",equipID:'A03B02_E01',status:1,alarmTime:'2018-09-12 03:45:32',alarmNum:58,position:"通河路江陵路交叉口"},
+				{name:"加压站_A01",type:"press",equipID:'A03B02_E01',status:1,alarmTime:'2018-09-06 05:45:32',alarmNum:52,position:"通河路江陵路交叉口"},
+				{name:"加压站_A01",type:"press",equipID:'A03B02_E01',status:1,alarmTime:'2018-09-01 16:45:32',alarmNum:65,position:"通河路江陵路交叉口"},
+				{name:"加压站_A01",type:"con",equipID:'A03B02_E01',status:1,alarmTime:'2018-08-25 21:45:32',alarmNum:50,position:"通河路江陵路交叉口"},
+				{name:"加压站_A01",type:"con",equipID:'A03B02_E01',status:1,alarmTime:'2018-08-23 16:45:32',alarmNum:58,position:"通河路江陵路交叉口"},
+				{name:"加压站_A01",type:"con",equipID:'A03B02_E01',status:1,alarmTime:'2018-08-19 18:45:32',alarmNum:60,position:"通河路江陵路交叉口"},
+				{name:"加压站_A01",type:"con",equipID:'A03B02_E01',status:1,alarmTime:'2018-08-17 14:45:32',alarmNum:63,position:"通河路江陵路交叉口"},
+				{name:"加压站_A01",type:"con",equipID:'A03B02_E01',status:1,alarmTime:'2018-08-15 03:45:32',alarmNum:67,position:"通河路江陵路交叉口"},
+				{name:"加压站_A01",type:"con",equipID:'A03B02_E01',status:0,alarmTime:'2018-08-13 09:45:32',alarmNum:49,position:"通河路江陵路交叉口"},
+				{name:"加压站_A01",type:"con",equipID:'A03B02_E01',status:1,alarmTime:'2018-08-11 14:45:32',alarmNum:45,position:"通河路江陵路交叉口"},
+				{name:"加压站_A01",type:"con",equipID:'A03B02_E01',status:1,alarmTime:'2018-08-06 16:45:32',alarmNum:60,position:"通河路江陵路交叉口"},
+				{name:"加压站_A01",type:"con",equipID:'A03B02_E01',status:1,alarmTime:'2018-07-27 21:45:32',alarmNum:55,position:"通河路江陵路交叉口"},
+				{name:"加压站_A01",type:"con",equipID:'A03B02_E01',status:1,alarmTime:'2018-07-23 14:45:32',alarmNum:60,position:"通河路江陵路交叉口"},
+				{name:"加压站_A01",type:"con",equipID:'A03B02_E01',status:0,alarmTime:'2018-07-19 20:45:32',alarmNum:60,position:"通河路江陵路交叉口"},
+				{name:"加压站_A01",type:"con",equipID:'A03B02_E01',status:1,alarmTime:'2018-07-15 18:45:32',alarmNum:55,position:"通河路江陵路交叉口"},
+				{name:"加压站_A01",type:"con",equipID:'A03B02_E01',status:1,alarmTime:'2018-07-06 13:45:32',alarmNum:63,position:"通河路江陵路交叉口"},
+				{name:"加压站_A01",type:"con",equipID:'A03B02_E01',status:1,alarmTime:'2018-06-24 18:45:32',alarmNum:56,position:"通河路江陵路交叉口"},
+				{name:"加压站_A01",type:"temp",equipID:'A03B02_E01',status:1,alarmTime:'2018-06-18 16:45:32',alarmNum:58,position:"通河路江陵路交叉口"}
+			];
+
+			var dataSource = new kendo.data.DataSource({
+				data: data,
+				pageSize: 15,
+				schema: {
+					model: { id: "id" }
+				},
+				change: function () {
+					_constants.DATA_GRID_NUMBER_START = 0;
+				}
+			});
+
+            $("#history_grid").kendoGrid({
+				columns: [
+					{ title: "序号",width: "5%",template: "#:(++(_constants.DATA_GRID_NUMBER_START)) #", attributes: {"class": "hgc_table_cell"}},
+					{ field: "name", title: "设施名称", width:"15%", attributes: {"class": "hgc_table_cell" } },
+					{ field: "equipID", title: "设施ID", width:"15%", attributes: {"class": "hgc_table_cell" } },
+					{ field: "alarmTime", title: "监测时间", width:"15%", attributes: {"class": "hgc_table_cell" } },
+					{ field: "alarmNum", title: "监测数值", width:"15%", attributes: {"class": "hgc_table_cell" } },
+					{ field: "status", title: "设施状态", width:"15%", attributes: {"class": "hgc_table_cell" } ,
+						template: function(dataItem) {
+							var statusNum = kendo.htmlEncode(dataItem.status);
+							var status = (statusNum == 1?'正常运行':'异常运行');
+							return status ;
+						}
+					},
+					{ field: "position", title: "设施位置", width:"20%", attributes: {"class": "hgc_table_cell" } }
+				],
+				dataSource:dataSource,
+  				height: "100%",
+				groupable: false,
+				selectable: true,
+				pageable: {
+    				pageSizes: 	false,
+					input: true,
+					buttonCount: 5,
+					messages: { 
+						first: "首页",
+						last: "尾页",
+						empty: "没有数据显示！",
+						display: "本页显示{0}~{1}条数据，共{2}条数据",
+						page: "",
+						of: "/{0}",
+						itemsPerPage: "",
+						next: "下一页",
+						previous: "上一页"
+					}
+				}
+			});
+
+			$('.time-select.type').change(function(){
+				var type = $('.time-select.type option:selected').text();
+				var options = $('.time-select.equip option');
+				for(var i=1;i<=options.length;i++){
+					var option = $('.time-select.equip option:nth-child('+i+')');
+					var equip = option.text().replace(/([^\u0000-\u00FF])+/g,type);
+					option.text(equip);
+				}
+			})
+
+			$('.time-select.equip').change(function(){
+				var type = $('.time-select.equip option:selected').text();
+				for(var i=0;i<data.length;i++){
+					data[i].name = type;
+					data[i].equipID = type.replace(/([^\u0000-\u00FF])+/g,'');
+					var name = $('.time-select.equip option:nth-child('+i+')');
+					var equip = option.text().replace(/([^\u0000-\u00FF])+/g,type);
+
+				}
+			})
+        })
+    </script>
+</body>
+</html>

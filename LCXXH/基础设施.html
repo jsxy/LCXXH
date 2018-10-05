@@ -1,0 +1,309 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>基础设施</title>
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/jquery.layout-latest.js"></script>
+<link href="css/common.css" rel="stylesheet">
+<style>
+	html,body{
+		width: 100%;
+		height: 100%;
+	}
+
+    .west-model{
+        width: 355px;
+        position: absolute;
+        top:15px;
+        left:20px;
+        border: 1px solid #0072ff;
+        background-color: #09254c;
+        overflow: hidden;
+    }
+    .model-header{
+        /* width: 328px; */
+        height: 50px; 
+        line-height: 50px; 
+        background-color: #143e84;
+        color: #fff;
+        font-size: 18px; 
+        padding-left: 25px;          
+    }
+    .model-header:before{
+        content: '';
+        display: inline-block;
+        width: 5px;
+        height: 20px;
+        background: url(./images/icon_base.png) no-repeat -230px 0px;
+        position: absolute;
+        left: 12px;
+        top: 17px;
+    }
+    .model-shrink{
+        width: 30px;
+        height: 30px;
+        background: url(./images/icon_base.png) no-repeat  -199px 5px;
+        float: right;
+        margin: 10px;
+        cursor: pointer;
+    }
+    .model-shrink.down{
+        background-position: -174px 5px;
+    }
+    .model-content{
+        padding: 12px 25px 0;
+    }
+    .base-btns{
+        display: inline-block;
+    }
+    .base-btn{
+        height: 32px;
+        line-height: 32px;
+        text-align-last: center;
+        border: 1px solid #0072ff;
+        background-color: transparent;
+        color: #fff;
+        margin: 0 5px 10px 5px;
+        float: left;
+        cursor: pointer;
+    }
+    .base-btn:hover,.base-btn.selected{
+        background-color: #0072ff;
+    }
+    .baseParts,.pipe{
+        width: 138px;
+    }
+    .heat,.water,.electric{
+        width: 88px;
+    }
+    .base_icon{
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background: url(./images/icon_base.png) no-repeat;
+        vertical-align: middle;
+        margin-right: 10px;
+    }
+    .baseParts .base_icon{
+        background-position: -58px 0;
+    }
+    .pipe .base_icon{
+        background-position: -84px 0;
+    }
+    .heat .base_icon{
+        background-position: -105px 0;
+    }
+    .water .base_icon{
+        background-position: -128px 0;
+    }
+    .electric .base_icon{
+        background-position: -152px 0;
+    }
+    .baseparts-list ul{
+        display: inline-block;
+        background-color: #0a3163;
+        margin-bottom: 20px;
+    }
+    .baseparts-list li{
+        width: 275px;
+        height: 50px;
+        line-height: 50px;
+        color: #fff;
+        padding-left:25px;
+        cursor: pointer;
+    }
+    .baseparts-list li:hover,.baseparts-list li.selected{
+        background-color: #0072ff;
+    }
+
+    .east-model{
+        width: 455px;
+        position: absolute;
+        top:15px;
+        right:20px;
+        bottom: 20px;
+        border: 1px solid #0072ff;
+        background-color: #09254c;
+        overflow: hidden;
+    }
+    .model-content table{
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #092141;
+    }
+    .model-content th,.model-content td{
+        height: 35px;
+        border: 1px solid #325ca2;
+        color: #fff;
+        text-align: center;
+    }
+    .model-content th{
+        background-color: #062955;
+    }
+    .model-content tr.selected:not(:first-child) td,.model-content tr:hover:not(:first-child) td{
+        background-color: #0072ff!important;
+        cursor: pointer;
+    }
+    .model-content tr.alarmed{
+        border: 1px solid #c5312e!important;
+        box-shadow: 0px 1px 30px 0px #c5312e inset;
+    }
+
+</style>
+</head>
+<body>
+	<div class="gis-container"></div>
+	<div class="west-model">
+        <div class="model-header">基础设施<div class="model-shrink"></div></div>
+        <div class="model-content">
+            <div class="base-btns">
+                <div class="base-btn baseParts selected"><span class="base_icon"></span>基础部件</div>
+                <div class="base-btn pipe"><span class="base_icon"></span>管网管线</div>
+                <div class="base-btn heat"><span class="base_icon"></span>供热</div>
+                <div class="base-btn water"><span class="base_icon"></span>供水</div>
+                <div class="base-btn electric"><span class="base_icon"></span>供电</div>
+            </div>
+            <div class="baseparts-list">
+                <ul>
+                    <li class="selected"> 1 供水泵站</li>
+                    <li> 2 排水泵站</li>
+                    <li> 3 消防栓</li>
+                    <li> 4 加压站</li>
+                    <li> 5 水表箱</li>
+                    <li> 6 窖井</li>
+                    <li> 7 流量监测点</li>
+                    <li> 8 水质监测点</li>
+                    <li> 9 压力监测点</li>
+                    <li> 10 排水监测点</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="east-model">
+        <div class="model-header">供水泵站检测器<div class="model-shrink"></div></div>
+        <div class="model-content" style="height:calc(100% - 80px);overflow:auto">
+            <table>
+                <tr>
+                    <th>设备名称</th>
+                    <th>监测数值</th>
+                </tr>
+                <tr>
+                    <td>检测器_A01</td>
+                    <td>14</td>
+                </tr>
+                <tr>
+                    <td>检测器_A02</td>
+                    <td>13</td>
+                </tr>
+                <tr>
+                    <td>检测器_A03</td>
+                    <td>15</td>
+                </tr>
+                <tr>
+                    <td>检测器_A04</td>
+                    <td>18</td>
+                </tr>
+                <tr>
+                    <td>检测器_A05</td>
+                    <td>21</td>
+                </tr>
+                <tr>
+                    <td>检测器_A06</td>
+                    <td>17</td>
+                </tr>
+                <tr class="alarmed">
+                    <td>检测器_A07</td>
+                    <td>36 </td>
+                </tr>
+                <tr>
+                    <td>检测器_A08</td>
+                    <td>13</td>
+                </tr>
+                <tr>
+                    <td>检测器_A09</td>
+                    <td>16</td>
+                </tr>
+                <tr>
+                    <td>检测器_A10</td>
+                    <td>13</td>
+                </tr>
+                <tr>
+                    <td>检测器_A11</td>
+                    <td>11</td>
+                </tr>
+                <tr>
+                    <td>检测器_A12</td>
+                    <td>28</td>
+                </tr>
+                <tr>
+                    <td>检测器_A13</td>
+                    <td>20</td>
+                </tr>
+                <tr>
+                    <td>检测器_A14</td>
+                    <td>16</td>
+                </tr>
+                <tr class="alarmed">
+                    <td>检测器_A15</td>
+                    <td>35</td>
+                </tr>
+                <tr>
+                    <td>检测器_A16</td>
+                    <td>18</td>
+                </tr>
+                <tr>
+                    <td>检测器_A17</td>
+                    <td>13</td>
+                </tr>
+                <tr>
+                    <td>检测器_A18</td>
+                    <td>16</td>
+                </tr>
+                <tr>
+                    <td>检测器_A19</td>
+                    <td>21</td>
+                </tr>
+                <tr>
+                    <td>检测器_A20</td>
+                    <td>15</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+
+<script>
+	$(function(){
+        $('.base-btn').click(function(){
+            if(!$(this).hasClass('selected')){
+                $(this).addClass('selected').siblings().removeClass('selected');
+                if($(this).hasClass('baseParts')){
+                    $('.baseparts-list').show();
+                }else{
+                    $('.baseparts-list').hide();
+                }
+            }
+        })
+
+        $('.model-content tr:even td').css('background','#062955')
+
+        $('.baseparts-list li').click(function(){
+            $(this).addClass('selected').siblings().removeClass('selected');
+        })
+
+        $('.model-shrink').click(function(){
+            if($(this).hasClass('down')){
+                $(this).removeClass('down');
+                $(this).parent().next().slideDown();
+                $(this).parents('.model-box').css('height','50%');
+            }else{
+                $(this).addClass('down');
+                $(this).parent().next().slideUp();
+                $(this).parents('.model-box').css('height','auto');
+            }
+        })
+	});
+
+</script>
+</html>

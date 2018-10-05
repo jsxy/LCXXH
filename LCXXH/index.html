@@ -1,0 +1,200 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<link href="ued/framework/styles/kendo.common.min.css" rel="stylesheet"/>
+<link href="ued/framework/styles/kendo.default.min.css" rel="stylesheet"/>
+<link href="css/skin.css" rel="stylesheet"/>
+<link href="css/layout-default-latest.css" rel="stylesheet">
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/jquery.layout-latest.js"></script>
+<script src="ued/framework/js/kendo.all.min.js"></script>
+<script src="js/base64.js"></script>
+<script src="js/navmenu.js"></script>
+<link href="css/common.css" rel="stylesheet">
+<link href="css/index.css" rel="stylesheet">
+</head>
+<body>
+	<div class="ui-layout-north north-style">
+		<div class="ui-header header-bg">	
+			<h1 class="header-logo">
+				<a href="#">聊城信息化大数据</a><br/>
+				<div>LIAOCHENG INFORMATION STATISTICS</div>
+			</h1>
+			<div class="header-btns">
+				<ul class="header-ul">
+					<li class="admin">admin</li>
+					<li class="li-exit" title="注销"></li>
+				</ul>
+			</div>
+			<div class="north-menu">
+				<ul id="menu">
+					<li>
+						<a link="基础设施.html" id="first">
+							基础设施可视化
+						</a>
+						<ul>
+							<li>
+								<a link="基础设施.html">
+									基础设施
+								</a>
+							</li>
+							<li>
+								<a link="统计分析.html">
+									统计分析
+								</a>
+							</li>
+							<li>
+								<a link="历史数据.html">
+									历史数据
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a  link="水环境监测.html">
+							生态环境可视化
+						</a>
+						<ul>
+							<li>
+								<a link="水环境监测.html">
+									水环境监测
+								</a>
+							</li>
+							<li>
+								<a link="大气环境监测.html">
+									大气环境监测
+								</a>
+							</li>
+							<li>
+								<a link="声环境监测.html">
+									声环境监测
+								</a>
+							</li>
+							<li>
+								<a link="主要污染源监测.html">
+									主要污染源监测
+								</a>
+							</li>
+							<li>
+								<a link="统计分析2.html">
+									统计分析
+								</a>
+							</li>
+							<li>
+								<a link="历史数据2.html">
+									历史数据
+								</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>	
+	</div>
+	
+	<iframe class="ui-layout-center" src="#" id="_main_frame"></iframe>
+	
+	<div class="ui-layout-south">
+		<div class="ui-footer">Copyright &copy; 2003-2017 浙江浙大中控信息技术有限公司</div>
+	</div>
+</body>
+
+<script>
+	$(function(){
+	_iframe_layout = $('body').layout({
+		defaults: {
+			resizable: false,
+			closable: false,
+			spacing_open: 0
+		},
+		north: {
+			size:128
+		},
+		south: {
+			size: 30
+		}
+	});
+	
+		$("#menu").kendoMenu();
+		
+		var currentLink = $.base64.decode(window.location.hash);
+		var target = '';
+		if (window.location.hash === '' || currentLink === 'undefined' || currentLink === '') {
+			target = $('#menu>li:nth-child(1) a');
+			currentLink = target.attr('link');
+		}
+		
+		if (!target.length) {
+           //target = $('li.k-item.k-state-default[link="' + currentLink + '"]').eq(0);
+           target = $('[link="' + currentLink + '"]').eq(0);
+		}
+
+		changeItemClick(target);
+		$("#_main_frame")[0].src = currentLink;
+	
+		$(".li-return").click(function(){
+			$("#first").click();
+		});
+	});
+
+	//加载iframe
+    function loadFrame(url) {
+        $("#platform_loading").show();
+        $("#_main_frame").attr("src", url);
+    }
+	//iframe加载完成
+    function loadComplete() {
+        $("#platform_loading").hide();
+    }
+	//点击选中的效果
+    function changeItemClick(target) {
+		
+        $('li.k-item.k-state-default.current').removeClass('current');
+        $('.k-link').removeClass('current');
+        target.addClass('current');
+        target.parents('li.k-item.k-state-default').addClass('current');
+        target.parents('.k-link').addClass('current');
+    }
+
+	$(function() {
+		$(document).on('click', '.k-animation-container li.k-item.k-state-default', function(e) {
+			var curLink = $(this).attr('link');
+			if (curLink === undefined || curLink === '' || curLink === '#') {
+				return;
+			}
+			e.stopPropagation();
+			
+			goMenu($(this).attr('code'), curLink);
+		});
+        //菜单点击事件
+		$(document).on('click', '#menu li a', function() {
+			var curLink = $(this).attr('link');
+			if (curLink === undefined || curLink === '' || curLink === '#') {
+				return;
+			}
+            //code：表示菜单的编码
+            //curLink:菜单对应的linkUrl
+			changeItemClick($(this));
+			goMenu($(this).attr('code'), curLink);
+		});
+		var liL = $("#menu > li").length;
+		for(i = 0;i < liL;i++){
+			var hasChild = $("#menu > li").eq(i).find("li.k-item").length;
+			if( hasChild == 0){
+				$("#menu > li").eq(i).find("span.k-i-arrow-s").css('display','none');
+			}
+		};
+		
+	});
+	
+	/*
+	修改成添加hashcode值，防止F5刷新后跳回到橱窗的第一个菜单
+	*/	
+	function goMenu(code , url){
+	    $("#_main_frame")[0].src = url;
+	}
+
+</script>
+</html>

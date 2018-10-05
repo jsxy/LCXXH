@@ -1,0 +1,382 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>大气环境监测</title>
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/echarts.js"></script>
+<link href="css/hcstyle.css" rel="stylesheet">
+<link href="css/common.css" rel="stylesheet">
+<script src="js/hcjs.js"></script>
+<style>
+	html,body{
+		width: 100%;
+		height: 100%;
+	}
+    .gis-container{
+        background-image: url(./images/gis-bg3.png);
+    }
+
+     .west-model{
+        width: 355px;
+        position: absolute;
+        top:15px;
+        left:20px;
+        bottom: 20px;
+        background-color: #09254c;
+        overflow: hidden;
+    }
+    .east-model{
+        width: 455px;
+        position: absolute;
+        top:15px;
+        right:20px;
+        bottom: 0px;
+        overflow: hidden;
+    }
+    .model-box{
+        height: 50%;
+		padding-bottom: 10px;
+        box-sizing: border-box;
+        position: relative;
+        transition: height 2s;
+    }
+    .model-header{
+        width: 428px;
+        height: 50px; 
+		line-height: 50px; 
+		background-color: #143e84;
+		color: #fff;
+		font-size: 18px;
+		border-bottom: none;   
+		padding-left: 25px;   
+		border: 1px solid #0072ff;  
+		border-bottom: none;     
+		border-radius: 3px 3px 0 0;         
+    }
+    .model-header:before{
+        content: '';
+        display: inline-block;
+        width: 5px;
+        height: 20px;
+        background: url(./images/icon_base.png) no-repeat -230px 0px;
+        position: absolute;
+        left: 12px;
+        top: 17px;
+    }
+    .model-shrink{
+        width: 30px;
+        height: 30px;
+        background: url(./images/icon_base.png) no-repeat  -199px 5px;
+        float: right;
+        margin: 10px;
+        cursor: pointer;
+    }
+    .model-shrink.down{
+        background-position: -174px 5px;
+    }
+	.model-content{
+		height: calc(100% - 50px);
+		background: #09254c;
+		border: 1px solid #0072ff;  
+		border-top: none;   
+		position: relative;
+	}
+
+    #gauge_chart,#bar_chart{
+        width: 100%;
+        height: 100%;
+    }
+    #gauge_chart{
+        height: calc(100% - 120px);
+	}
+	.air-quality{
+		width: 80%;
+        height: 100px;
+        margin:0 auto 20px;
+	}
+	.air-quality td{
+		padding: 0 5px;
+		color: #fff;
+		font-size: 14px;
+	}
+	.air-quality td:nth-child(1),.air-quality td:nth-child(3){
+		text-align: right;
+		color: #949fd6;
+	}
+    .time-select{
+        margin: 5px 20px 4px 0;
+    }
+    .model-box.dqhjjc{
+        height: 100%;
+    }
+    .dqhjjc .model-header{
+        width: 328px;
+    }
+
+</style>
+</head>
+<body>
+	<div class="gis-container"></div>
+    <div class="west-model">
+        <div class="model-box dqhjjc">
+            <div class="model-header">大气环境监测<div class="model-shrink"></div></div>
+            <div class="model-content">
+                <ul id="example" class="ztree"></ul>
+            </div>
+        </div>
+    </div>
+	<div class="east-model">
+        <div class="model-box">
+            <div class="model-header">大气环境监测器<div class="model-shrink"></div></div>
+            <div class="model-content">
+                <div id="gauge_chart"></div>                
+                <table class="air-quality">
+                    <tr>
+                        <td style="width:25%">PM2.5</td>
+                        <td style="width:25%">17MG/m³</td>
+                        <td style="width:25%">NO2</td>
+                        <td style="width:25%">6MG/m³</td>
+                    </tr>
+                    <tr>
+                        <td>PM10</td>
+                        <td>40MG/m³</td>
+                        <td>CO</td>
+                        <td>2.3MG/m³</td>
+                    </tr>
+                    <tr>
+                        <td>SO2</td>
+                        <td>83MG/m³</td>
+                        <td>O3</td>
+                        <td>56MG/m³</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+var setting = {
+        view : {
+            dblClickExpand : false,
+            fontCss: getFont,
+            showLine: false
+        },
+        callback: {
+            beforeClick:beforeClick,
+            onClick: onClick
+        }
+    };
+    
+    var zNodes =[
+        { name:"东昌府区", iconSkin:"picon",open:true, 
+            children: [
+                { name:"大气环境检测器A_01"},
+                { name:"大气环境检测器A_02"},
+                { name:"大气环境检测器A_03"},
+                { name:"大气环境检测器A_04"},
+                { name:"大气环境检测器A_05"},
+                { name:"大气环境检测器A_06"},
+                { name:"大气环境检测器A_07"},
+                { name:"大气环境检测器A_08"},
+                { name:"大气环境检测器A_09"},
+            ]
+        },
+        { name:"临清市", open:false, iconSkin:"picon", 
+            children: [
+                { name:"大气环境检测器B_01"},
+                { name:"大气环境检测器B_02"},
+                { name:"大气环境检测器B_03"},
+                { name:"大气环境检测器B_04"},
+                { name:"大气环境检测器B_05"},
+                { name:"大气环境检测器B_06"},
+                { name:"大气环境检测器B_07"}
+            ]
+        },
+        { name:"茌平县", open:false, iconSkin:"picon", 
+            children: [
+                { name:"大气环境检测器C_01"},
+                { name:"大气环境检测器C_02"},
+                { name:"大气环境检测器C_03"},
+                { name:"大气环境检测器C_04"},
+                { name:"大气环境检测器C_05"},
+                { name:"大气环境检测器C_06"},
+                { name:"大气环境检测器C_07"},
+                { name:"大气环境检测器C_08"},
+                { name:"大气环境检测器C_09"},
+                { name:"大气环境检测器C_010"},
+                { name:"大气环境检测器C_011"}
+            ]
+        },
+        { name:"东阿县", open:false, iconSkin:"picon", 
+            children: [
+                { name:"大气环境检测器C_01"},
+                { name:"大气环境检测器D_02"},
+                { name:"大气环境检测器D_03"},
+                { name:"大气环境检测器D_04"},
+                { name:"大气环境检测器D_05"},
+                { name:"大气环境检测器D_06"},
+                { name:"大气环境检测器D_07"},
+                { name:"大气环境检测器D_08"},
+            ]
+        },
+        { name:"冠县", open:false, iconSkin:"picon", 
+            children: [
+                { name:"大气环境检测器E_01"},
+                { name:"大气环境检测器E_02"},
+                { name:"大气环境检测器E_03"},
+                { name:"大气环境检测器E_04"},
+                { name:"大气环境检测器E_05"},
+            ]
+        },
+        { name:"高唐县", open:false, iconSkin:"picon", 
+            children: [
+                { name:"大气环境检测器F_01"},
+                { name:"大气环境检测器F_02"},
+                { name:"大气环境检测器F_03"},
+                { name:"大气环境检测器F_04"},
+                { name:"大气环境检测器F_05"},
+                { name:"大气环境检测器F_06"},
+                { name:"大气环境检测器F_07"},
+                { name:"大气环境检测器F_08"},
+                { name:"大气环境检测器F_09"}
+            ]
+        },
+        { name:"阳谷县", open:false, iconSkin:"picon", 
+            children: [
+                { name:"大气环境检测器G_01"},
+                { name:"大气环境检测器G_02"},
+                { name:"大气环境检测器G_03"},
+                { name:"大气环境检测器G_04"},
+                { name:"大气环境检测器G_05"},
+                { name:"大气环境检测器G_06"},
+            ]
+        },
+        { name:"莘县", open:false, iconSkin:"picon", 
+            children: [
+                { name:"大气环境检测器H_01"},
+                { name:"大气环境检测器H_02"},
+                { name:"大气环境检测器H_03"},
+                { name:"大气环境检测器H_04"},
+                { name:"大气环境检测器H_05"},
+                { name:"大气环境检测器H_06"},
+                { name:"大气环境检测器H_07"},
+                { name:"大气环境检测器H_08"},
+                { name:"大气环境检测器H_09"},
+                { name:"大气环境检测器H_10"},
+                { name:"大气环境检测器H_11"},
+                { name:"大气环境检测器H_12"},
+                { name:"大气环境检测器H_13"},
+                { name:"大气环境检测器H_14"},
+                { name:"大气环境检测器H_15"},
+            ]
+        },
+    ];
+
+    function getFont(treeId, node) {
+        return (!!node.highlight)?{color:"red","font-weight":"bold","text-decoration":"none"}:{color:"#fff","font-weight":"normal","text-decoration":"none"};
+    }
+    
+    function beforeClick(treeId, treeNode, clickFlag){
+        return ($(".list-table-input.edit").length == 0);
+    }
+
+    function onClick(event, treeId, treeNode, clickFlag) {
+        treeObj = $.fn.zTree.getZTreeObj("example");
+        nodes = treeObj.getSelectedNodes();
+        if(!treeNode.isParent){	
+            $(".level2.selected").removeClass("selected");
+            $("#"+treeNode.tId).addClass("selected").siblings().removeClass("selected");				
+            $(".company-handle-btns").show();					
+        }
+    }
+    
+    function selectTree(vehicleCompanyId){
+        var treeObj = $.fn.zTree.getZTreeObj("example");
+        var nodes = treeObj.getNodeByParam("companyId", vehicleCompanyId, null);
+        if (nodes) {
+            treeObj.selectNode(nodes);
+            treeObj.expandNode(nodes, true, true, true);
+        }
+    }	
+    
+    $(function(){
+
+        $.fn.zTree.init($("#example"), setting, zNodes);  
+
+        var gauge_option =  {
+            tooltip : {
+                formatter: "{a} {c}"
+            },
+            series : [{
+                name:'AQI',
+                type:'gauge',
+                startAngle: 180,
+                endAngle: 0,
+                center : ['50%', '70%'],    // 默认全局居中
+                radius : '120%',
+                min:0,
+                max:500,
+                splitNumber:5,
+                axisLine: {            // 坐标轴线
+                    lineStyle: {       // 属性lineStyle控制线条样式
+                        width:10
+                    }
+                },
+                axisLine: { 
+                    lineStyle: { 
+                        color: [[0.1, '#19b596'],[0.2, '#1dd9f5'],[0.4, '#fff000'],[0.6,'#ff9000'],[1, '#c7113a']],
+                        width: 20
+                    }
+                },
+                axisLabel: {            // 坐标轴小标记
+                    textStyle: {       // 属性lineStyle控制线条样式
+                        fontWeight: 'bolder',
+                        color: '#fff'
+                    }
+                },
+                axisTick: {  
+                    length :22,
+                    lineStyle: {      
+                        color: '#09254c',
+                        width: 3
+                    }
+                },
+                detail : {
+                        offsetCenter: [0, '20%'],   
+                        textStyle: {    
+                            fontSize: 20,
+                            color: '#fff'
+                        },
+                        formatter:'AQI {value}',
+                    },
+                    data:[{value: 98}]
+                }
+            ]
+        };
+
+        var gauge_chart = echarts.init(document.getElementById("gauge_chart")); 
+		gauge_chart.setOption(gauge_option);
+
+        $('.model-shrink').click(function(){
+            if($(this).hasClass('down')){
+                $(this).removeClass('down');
+                $(this).parent().next().slideDown();
+                $(this).parents('.model-box').css('height','50%');
+            }else{
+                $(this).addClass('down');
+                $(this).parent().next().slideUp();
+                $(this).parents('.model-box').css('height','auto');
+            }
+        })
+
+        /* clearInterval(timeTicket);
+        timeTicket = setInterval(function (){
+            gauge_option.series[0].data[0].value = (Math.random()*100).toFixed(2) - 0;
+            gauge_chart.setOption(gauge_option, true);
+        },2000); */
+	});
+
+</script>
+</html>

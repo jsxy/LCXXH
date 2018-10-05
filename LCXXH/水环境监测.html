@@ -1,0 +1,347 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>水环境监测</title>
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/echarts.js"></script>
+<link href="css/hcstyle.css" rel="stylesheet">
+<link href="css/common.css" rel="stylesheet">
+<script src="js/hcjs.js"></script>
+<style>
+	html,body{
+		width: 100%;
+		height: 100%;
+    }
+    .gis-container{
+        background-image: url(./images/gis-bg2.png);
+    }
+
+    .west-model{
+        width: 355px;
+        position: absolute;
+        top:15px;
+        left:20px;
+        bottom: 20px;
+        background-color: #09254c;
+        overflow: hidden;
+    }
+    .east-model{
+        width: 455px;
+        position: absolute;
+        top:15px;
+        right:20px;
+        bottom: 0px;
+        overflow: hidden;
+    }
+    .model-box{
+        height: 50%;
+		padding-bottom: 10px;
+        box-sizing: border-box;
+        position: relative;
+    }
+    .model-header{
+        width: 428px;
+        height: 50px; 
+		line-height: 50px; 
+		background-color: #143e84;
+		color: #fff;
+		font-size: 18px;
+		border: 1px solid #0072ff;  
+		border-bottom: none;   
+		padding-left: 25px;     
+		border-radius: 3px 3px 0 0;         
+    }
+    .model-header:before{
+        content: '';
+        display: inline-block;
+        width: 5px;
+        height: 20px;
+        background: url(./images/icon_base.png) no-repeat -230px 0px;
+        position: absolute;
+        left: 12px;
+        top: 17px;
+    }
+    .model-shrink{
+        width: 30px;
+        height: 30px;
+        background: url(./images/icon_base.png) no-repeat  -199px 5px;
+        float: right;
+        margin: 10px;
+        cursor: pointer;
+    }
+    .model-shrink.down{
+        background-position: -174px 5px;
+    }
+	.model-content{
+		height: calc(100% - 50px);
+		background: #09254c;
+		border: 1px solid #0072ff;  
+		border-top: none;   
+		position: relative;
+        overflow: auto;
+	}
+
+    #pie_chart{
+        width: 100%;
+        height: 100%;
+    }
+    .time-select{
+        margin: 5px 20px 4px 0;
+    }
+    .yysyzl .model-content{
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    .model-content table{
+        width: 100%;
+        height: 100%;
+        border-collapse: collapse;
+        background-color: #092243;
+    }
+    .model-content tr.odd{
+        background-color: #062955;
+    }
+    .model-content th,.model-content td{
+        color: #fff;
+        border: 1px solid #183d74;
+        padding: 0 20px;
+        text-align: center;
+    }
+    .model-box.shjjc{
+        height: 100%;
+    }
+    .shjjc .model-header{
+        width: 328px;
+    }
+
+</style>
+</head>
+<body>
+    <div class="gis-container"></div>
+    <div class="west-model">
+        <div class="model-box shjjc">
+            <div class="model-header">水环境监测<div class="model-shrink"></div></div>
+            <div class="model-content">
+                <ul id="example" class="ztree"></ul>
+            </div>
+        </div>
+    </div>
+	<div class="east-model">
+        <div class="model-box yysyzl">
+            <div class="model-header">饮用水源质量监测
+                <div class="model-shrink"></div>
+            </div>
+            <div class="model-content">
+                <table>
+                    <tr class="odd">
+                        <th>监测项目</th>
+                        <th>监测数值</th>
+                        <th>标准值</th>
+                    </tr>
+                    <tr>
+                        <td>色度</td>
+                        <td>14</td>
+                        <td>20</td>
+                    </tr>
+                    <tr class="odd">
+                        <td>浑浊度(TPU)</td>
+                        <td>12</td>
+                        <td>16</td>
+                    </tr>
+                    <tr>
+                        <td>臭和味</td>
+                        <td>2</td>
+                        <td>8</td>
+                    </tr>
+                    <tr class="odd">
+                        <td>肉眼可见物</td>
+                        <td>44</td>
+                        <td>60</td>
+                    </tr>
+                    <tr>
+                        <td>化学需氧量(mg/L)</td>
+                        <td>56</td>
+                        <td>38</td>
+                    </tr>
+                    <tr class="odd">
+                        <td>细菌总数</td>
+                        <td>66</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>总大肠菌群</td>
+                        <td>36</td>
+                        <td>120</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+
+    var setting = {
+		view : {
+			dblClickExpand : false,
+			fontCss: getFont,
+			showLine: false
+		},
+		callback: {
+			beforeClick:beforeClick,
+			onClick: onClick
+		}
+	};
+	
+	var zNodes =[
+		{ name:"东昌府区", iconSkin:"picon",open:true, 
+			children: [
+				{ name:"水质检测器A_01"},
+				{ name:"水质检测器A_02"},
+				{ name:"水质检测器A_03"},
+				{ name:"水质检测器A_04"},
+				{ name:"水质检测器A_05"},
+				{ name:"水质检测器A_06"},
+				{ name:"水质检测器A_07"},
+				{ name:"水质检测器A_08"},
+				{ name:"水质检测器A_09"},
+			]
+		},
+		{ name:"临清市", open:false, iconSkin:"picon", 
+            children: [
+				{ name:"水质检测器B_01"},
+				{ name:"水质检测器B_02"},
+				{ name:"水质检测器B_03"},
+				{ name:"水质检测器B_04"},
+				{ name:"水质检测器B_05"},
+				{ name:"水质检测器B_06"},
+				{ name:"水质检测器B_07"}
+			]
+		},
+		{ name:"茌平县", open:false, iconSkin:"picon", 
+            children: [
+				{ name:"水质检测器C_01"},
+				{ name:"水质检测器C_02"},
+				{ name:"水质检测器C_03"},
+				{ name:"水质检测器C_04"},
+				{ name:"水质检测器C_05"},
+				{ name:"水质检测器C_06"},
+				{ name:"水质检测器C_07"},
+				{ name:"水质检测器C_08"},
+				{ name:"水质检测器C_09"},
+				{ name:"水质检测器C_010"},
+				{ name:"水质检测器C_011"}
+			]
+		},
+		{ name:"东阿县", open:false, iconSkin:"picon", 
+            children: [
+                { name:"水质检测器C_01"},
+				{ name:"水质检测器D_02"},
+				{ name:"水质检测器D_03"},
+				{ name:"水质检测器D_04"},
+				{ name:"水质检测器D_05"},
+				{ name:"水质检测器D_06"},
+				{ name:"水质检测器D_07"},
+				{ name:"水质检测器D_08"},
+			]
+		},
+		{ name:"冠县", open:false, iconSkin:"picon", 
+            children: [
+                { name:"水质检测器E_01"},
+				{ name:"水质检测器E_02"},
+				{ name:"水质检测器E_03"},
+				{ name:"水质检测器E_04"},
+				{ name:"水质检测器E_05"},
+			]
+		},
+		{ name:"高唐县", open:false, iconSkin:"picon", 
+            children: [
+                { name:"水质检测器F_01"},
+				{ name:"水质检测器F_02"},
+				{ name:"水质检测器F_03"},
+				{ name:"水质检测器F_04"},
+				{ name:"水质检测器F_05"},
+				{ name:"水质检测器F_06"},
+				{ name:"水质检测器F_07"},
+				{ name:"水质检测器F_08"},
+				{ name:"水质检测器F_09"}
+			]
+		},
+		{ name:"阳谷县", open:false, iconSkin:"picon", 
+            children: [
+                { name:"水质检测器G_01"},
+				{ name:"水质检测器G_02"},
+				{ name:"水质检测器G_03"},
+				{ name:"水质检测器G_04"},
+				{ name:"水质检测器G_05"},
+				{ name:"水质检测器G_06"},
+			]
+		},
+		{ name:"莘县", open:false, iconSkin:"picon", 
+            children: [
+                { name:"水质检测器H_01"},
+				{ name:"水质检测器H_02"},
+				{ name:"水质检测器H_03"},
+				{ name:"水质检测器H_04"},
+				{ name:"水质检测器H_05"},
+				{ name:"水质检测器H_06"},
+				{ name:"水质检测器H_07"},
+				{ name:"水质检测器H_08"},
+				{ name:"水质检测器H_09"},
+				{ name:"水质检测器H_10"},
+				{ name:"水质检测器H_11"},
+				{ name:"水质检测器H_12"},
+				{ name:"水质检测器H_13"},
+				{ name:"水质检测器H_14"},
+				{ name:"水质检测器H_15"},
+			]
+		},
+	];
+
+	function getFont(treeId, node) {
+		return (!!node.highlight)?{color:"red","font-weight":"bold","text-decoration":"none"}:{color:"#fff","font-weight":"normal","text-decoration":"none"};
+	}
+	
+	function beforeClick(treeId, treeNode, clickFlag){
+		return ($(".list-table-input.edit").length == 0);
+	}
+
+	function onClick(event, treeId, treeNode, clickFlag) {
+		treeObj = $.fn.zTree.getZTreeObj("example");
+		nodes = treeObj.getSelectedNodes();
+		if(!treeNode.isParent){	
+			$(".level2.selected").removeClass("selected");
+			$("#"+treeNode.tId).addClass("selected").siblings().removeClass("selected");				
+			$(".company-handle-btns").show();					
+		}
+	}
+	
+	function selectTree(vehicleCompanyId){
+        var treeObj = $.fn.zTree.getZTreeObj("example");
+        var nodes = treeObj.getNodeByParam("companyId", vehicleCompanyId, null);
+        if (nodes) {
+            treeObj.selectNode(nodes);
+            treeObj.expandNode(nodes, true, true, true);
+        }
+	}	
+    
+    $(function(){
+
+        $.fn.zTree.init($("#example"), setting, zNodes);
+
+        $('.model-shrink').click(function(){
+            if($(this).hasClass('down')){
+                $(this).removeClass('down');
+                $(this).parent().next().slideDown();
+                $(this).parents('.model-box').css('height','50%');
+            }else{
+                $(this).addClass('down');
+                $(this).parent().next().slideUp();
+                $(this).parents('.model-box').css('height','auto');
+            }
+        })
+	});
+
+</script>
+</html>

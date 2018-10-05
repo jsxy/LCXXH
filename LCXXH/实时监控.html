@@ -1,0 +1,485 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<link href="ued/framework/styles/kendo.common.min.css" rel="stylesheet"/>
+<link href="ued/framework/styles/kendo.default.min.css" rel="stylesheet"/>
+<link href="css/layout-default-latest.css" rel="stylesheet">
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/jquery.layout-latest.js"></script>
+<script src="ued/framework/js/kendo.all.min.js"></script>
+<script src="js/base64.js"></script>
+<script src="js/navmenu.js"></script>
+<script src="js/echarts.js"></script>
+<link href="css/common.css" rel="stylesheet">
+<style>
+	html,body{
+		width: 100%;
+		height: 100%;
+	}
+	.gis-container{
+		width: 100%;
+		height: 100%;
+		background: url(./images/gis-bg.png) no-repeat center center;
+		background-size: 100% 100%;
+	}
+	.west-model{
+		width: 365px;
+		position: absolute;
+		left: 10px;
+		top: 10px;
+		bottom: 0px;
+	}
+	.model-box.small{
+		height: 26%;
+	}
+	.model-box.big{
+		height: 37%;
+	}
+	.chart-container{
+		height: calc(100% - 10px);
+		position: relative;
+	}
+	.model-header{
+		height: 50px; 
+		line-height: 50px; 
+		background-color: #143e84;
+		border-bottom: #949fd6;
+		border: 1px solid #949fd6; 
+		color: #fff;
+		font-size: 18px;
+		border-bottom: none;   
+		padding-left: 25px;          
+	}
+	.model-header:before{
+		content: '';
+		display: inline-block;
+		width: 5px;
+		height: 20px;
+		background: url(../images/icon_base.png) no-repeat;
+		background-position: -176px 0px;
+		position: absolute;
+		left: 12px;
+		top: 17px;
+	}
+	.chart-content{
+		height: calc(100% - 50px);
+		background: #0a0b30;
+		border: 1px solid #949fd6;
+	}
+	.dust-data{
+		height: 60px;
+		line-height: 60px;
+		font-size: 32px;
+		color: #fff;
+		text-indent: 30px;
+	}
+	#line_chart{
+		width: 100%;
+		height: calc(100% - 60px);
+	}
+	#pie_chart{
+		width: 100%;
+		height: 100%;
+	}
+
+	.east-model{
+		width: 365px;
+		position: absolute;
+		right: 10px;
+		top: 10px;
+		bottom: 0px;
+	}
+	table.monitor-tab{
+		width: 100%;
+		height: 100%;
+		border-collapse: collapse;
+	}
+	.monitor-tab tr:first-child{
+		border-bottom: 1px solid #454e81;
+	}
+	.monitor-tab tr td:first-child{
+		border-right: 1px solid #454e81;
+	}
+	.attr-box{
+		width: 100%;
+		height: 62px;
+	}
+	.attr-icon{
+		width: 35%;
+		height: 100%;
+		float: left;
+	}
+	.temp .attr-icon{
+		background: url(./images/icon_temp.png) no-repeat 24px center;
+	}
+	.wet .attr-icon{
+		background: url(./images/icon_wet.png) no-repeat 24px center;
+	}
+	.wind .attr-icon{
+		background: url(./images/icon_wind.png) no-repeat 24px center;
+	}
+	.pressure .attr-icon{
+		background: url(./images/icon_pressure.png) no-repeat 24px center;
+	}
+	.attr-name{
+		width: 65%;
+		height: 50%;
+		text-align: center;
+		color: #949fd6;
+		float: left;
+
+	}
+	.attr-num{
+		width: 60%;
+		height: 50%;
+		text-align: center;
+		color: #fff;
+		float: left;		
+	}
+	#gauge_chart{
+		width: 100%;
+		height: calc(100% - 100px);
+	}
+	.air-quality{
+		width: 100%;
+		height: 100px;
+	}
+	.air-quality td{
+		padding: 0 5px;
+		color: #fff;
+		font-size: 14px;
+	}
+	.air-quality td:nth-child(1),.air-quality td:nth-child(3){
+		text-align: right;
+		color: #949fd6;
+	}
+
+</style>
+</head>
+<body>
+	<div class="gis-container"></div>
+	<div class="west-model">
+		<div class="model-box small">
+			<div class="chart-container">
+				<div class="model-header">扬尘</div>
+				<div class="chart-content">
+					<div class="dust-data">39.25</div>
+					<div id="line_chart"></div>
+				</div>
+			</div>
+		</div>
+		<div class="model-box big">
+			<div class="chart-container">
+				<div class="model-header">污染源企业</div>
+				<div class="chart-content">					
+					<div id="circle_chart"></div>
+					<div></div>
+					<div></div>
+					<div></div>
+				</div>
+			</div>			
+		</div>
+		<div class="model-box big">
+			<div class="chart-container">
+				<div class="model-header">水质类别比例</div>
+				<div class="chart-content">		
+					<div id="pie_chart"></div>
+				</div>
+			</div>			
+		</div>
+	</div>
+	<div class="east-model">
+		<div class="model-box small">
+				<div class="chart-container">
+					<div class="model-header">实时监测信息</div>
+					<div class="chart-content">
+						<table class="monitor-tab">
+							<tr>
+								<td style="width:50%">
+									<div class="attr-box temp">
+										<div class="attr-icon"></div>
+										<div class="attr-name">温度</div>
+										<div class="attr-num">32.5℃</div>
+									</div>
+								</td>
+								<td style="width:50%">
+									<div class="attr-box wet">
+										<div class="attr-icon"></div>
+										<div class="attr-name">湿度</div>
+										<div class="attr-num">34%RH</div>
+									</div>
+
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="attr-box wind">
+										<div class="attr-icon"></div>
+										<div class="attr-name">风力</div>
+										<div class="attr-num">一级 西北风</div>
+									</div>
+
+								</td>
+								<td>
+									<div class="attr-box pressure">
+										<div class="attr-icon"></div>
+										<div class="attr-name">大气压强</div>
+										<div class="attr-num">1004HPA</div>
+									</div>
+
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="model-box big">
+				<div class="chart-container">
+					<div class="model-header">实时空气质量</div>
+					<div class="chart-content">
+						<div id="gauge_chart"></div>
+						<table class="air-quality">
+							<tr>
+								<td style="width:25%">PM2.5</td>
+								<td style="width:25%">17MG/m³</td>
+								<td style="width:25%">NO2</td>
+								<td style="width:25%">6MG/m³</td>
+							</tr>
+							<tr>
+								<td>PM10</td>
+								<td>40MG/m³</td>
+								<td>CO</td>
+								<td>2.3MG/m³</td>
+							</tr>
+							<tr>
+								<td>SO2</td>
+								<td>83MG/m³</td>
+								<td>O3</td>
+								<td>56MG/m³</td>
+							</tr>
+						</table>
+					</div>
+				</div>			
+			</div>
+			<div class="model-box big">
+				<div class="chart-container">
+					<div class="model-header">年污染排放同比分析</div>
+					<div class="chart-content"></div>
+				</div>			
+			</div>
+	</div>
+	<div class="south-model">
+
+	</div>
+</body>
+
+<script>
+	$(function(){
+            var bar_option = {
+                color:['#23a7c0'],
+                tooltip : {
+                    trigger: 'axis'
+                },
+                grid:{
+                    x:80,
+                    y:20,
+                    x2:0,
+                    y2:25
+                },
+                xAxis : [{
+                    type : 'value',
+                    show:false
+                }],
+                yAxis : [{
+                    type : 'category',   
+                    axisLine:{
+                        show:false
+                    },                 
+                    axisLabel:{                        
+                        textStyle : {
+                            color : '#fff',
+                            fontFamily : '微软雅黑'
+                        }
+                    },
+                    data : ['滕头生态景区','黄贤森林公园','岩头古村','民国大杂院','雪窦山风景区']
+                }],
+                series : [{
+                    name:'2011年',
+                    type:'bar',
+                    barWidth: 12,                    
+                    itemStyle : {
+                        normal : {
+                            barBorderRadius:[6,6,6,6]
+                        }
+                    },
+                    data:[18203, 23489, 29034, 104970, 131744]
+                }]
+            };
+
+            var line_chart = echarts.init(document.getElementById("line_chart"));
+            line_chart.setOption({
+                color:["#56baca"],
+                tooltip:{trigger:'axis'},
+                grid:{
+                    x:50,
+                    y:10,
+                    x2:30,
+                    y2:40
+                },
+                xAxis:[{
+                    type:'category',
+                    axisLine:{                        
+                        lineStyle : {
+                            color : '#1d6c7b'
+                        }
+                    }, 
+                    splitLine:{
+                        show:false
+                    },
+                    axisLabel:{    
+                        interval:0,                    
+                        textStyle : {
+                            color : '#fff',
+                            fontFamily : '微软雅黑'
+                        }
+                    },                
+                    boundaryGap : false,
+                    data:function(){
+                        var data=[];
+                        for(var i=1;i<=9;i++){
+                            data.push('09/2'+i);
+                        }
+                        return data;
+                    }() 
+                }],
+                yAxis:[{
+                    type:'value',
+                    axisLine:{                        
+                        lineStyle : {
+                            color : '#1d6c7b'
+                        }
+                    },
+                    axisLabel:{                        
+                        textStyle : {
+                            color : '#fff',
+                            fontFamily : '微软雅黑'
+                        }
+                    },
+                    splitLine:{
+                        show:false
+					},
+					axisTick:{
+						show:false
+					}
+                }],
+                series:[{
+                    name:'7日客流量',
+					type:'line',
+					symbol:'emptyCircle',
+					symbolSize:6,
+                    data:[23,14,25,32,28,26,20,23,15]
+                }]
+            });             
+
+            // var bar_chart = echarts.init(document.getElementById("bar_chart")); 
+            // bar_chart.setOption(bar_option);    
+
+            var pie_chart = echarts.init(document.getElementById("pie_chart")); 
+            pie_chart.setOption({
+				color:['#1dd9f5','#c7113a','#fff000','#19b596'],
+				title: {
+                    text: '2018-10-08',
+                    x: 'center',
+                    y: 'center',
+                    textStyle : {
+                        color : '#fff',
+                        fontFamily : '微软雅黑',
+                        fontSize : 16
+                    }
+                },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                calculable : false,
+                series : [{
+                    name:'出行方式',
+					type:'pie',
+					roseType: 'radius',
+                    radius : ['55%', '75%'],
+                    data:[
+                        {value:25, name:'Ⅳ类'},
+                        {value:30, name:'Ⅲ类'},
+                        {value:40, name:'Ⅱ类'},
+                        {value:50, name:'Ⅰ类'}
+                    ]
+                }]
+			});
+			
+			var gauge_chart = echarts.init(document.getElementById("gauge_chart")); 
+            gauge_chart.setOption({
+                color:["#56baca"],
+                tooltip:{trigger:'axis'},
+                grid:{
+                    x:30,
+                    y:10,
+                    x2:16,
+                    y2:40
+                },
+                xAxis:[{
+                    type:'category',
+                    axisLine:{                        
+                        lineStyle : {
+                            color : '#1d6c7b'
+                        }
+                    }, 
+                    splitLine:{
+                        show:false
+                    },
+                    axisLabel:{    
+                        interval:0,                    
+                        textStyle : {
+                            color : '#fff',
+                            fontFamily : '微软雅黑'
+                        }
+                    },                
+                    boundaryGap : false,
+                    data:function(){
+                        var data=[];
+                        for(var i=1;i<=7;i++){
+                            data.push('09/2'+i);
+                        }
+                        return data;
+                    }() 
+                }],
+                yAxis:[{
+                    type:'value',
+                    axisLine:{                        
+                        lineStyle : {
+                            color : '#1d6c7b'
+                        }
+                    },
+                    axisLabel:{                        
+                        textStyle : {
+                            color : '#fff',
+                            fontFamily : '微软雅黑'
+                        }
+                    },
+                    splitLine:{
+                        show:false
+                    }
+                }],
+                series:[{
+                    name:'7日客流量',
+                    type:'line',
+                    smooth: true,
+                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                    data:[0,36,43,91,58,60,13]
+                }]
+            });
+	});
+
+</script>
+</html>
