@@ -18,18 +18,27 @@
         position: absolute;
         top:15px;
         left:20px;
+    }
+    .model-box{
+        height: 100%;
         border: 1px solid #0072ff;
+        box-sizing: border-box;
+        transition: height 2s;
         background-color: #09254c;
         overflow: hidden;
     }
     .model-header{
-        /* width: 328px; */
         height: 50px; 
-        line-height: 50px; 
-        background-color: #143e84;
-        color: #fff;
-        font-size: 18px; 
-        padding-left: 25px;          
+		line-height: 50px; 
+		background-color: #143e84;
+		color: #fff;
+		font-size: 18px; 
+		padding-left: 25px;      
+		border-radius: 3px 3px 0 0;  
+        position: relative;       
+    }
+    .west-model .model-header{
+        width: 328px;
     }
     .model-header:before{
         content: '';
@@ -53,7 +62,7 @@
         background-position: -174px 5px;
     }
     .model-content{
-        padding: 12px 25px 0;
+        padding: 15px 25px 0;
     }
     .base-btns{
         display: inline-block;
@@ -104,7 +113,7 @@
     .baseparts-list ul{
         display: inline-block;
         background-color: #0a3163;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
     .baseparts-list li{
         width: 275px;
@@ -123,9 +132,7 @@
         position: absolute;
         top:15px;
         right:20px;
-        bottom: 20px;
-        border: 1px solid #0072ff;
-        background-color: #09254c;
+        height: calc(100% - 35px);
         overflow: hidden;
     }
     .model-content table{
@@ -158,120 +165,124 @@
         marginwidth="0"></iframe>
 	<!--<div class="gis-container"></div>-->
 	<div class="west-model">
-        <div class="model-header">基础设施<div class="model-shrink"></div></div>
-        <div class="model-content">
-            <div class="base-btns">
-                <div class="base-btn baseParts selected"><span class="base_icon"></span>基础部件</div>
-                <div class="base-btn pipe"><span class="base_icon"></span>管网管线</div>
-                <div class="base-btn heat"><span class="base_icon"></span>供热</div>
-                <div class="base-btn water"><span class="base_icon"></span>供水</div>
-                <div class="base-btn electric"><span class="base_icon"></span>供电</div>
-            </div>
-            <div class="baseparts-list">
-                <ul>
-                    <li class="selected"> 1 供水泵站</li>
-                    <li> 2 排水泵站</li>
-                    <li> 3 消防栓</li>
-                    <li> 4 加压站</li>
-                    <li> 5 水表箱</li>
-                    <li> 6 窖井</li>
-                    <li> 7 流量监测点</li>
-                    <li> 8 水质监测点</li>
-                    <li> 9 压力监测点</li>
-                    <li> 10 排水监测点</li>
-                </ul>
+        <div class="model-box">
+            <div class="model-header">基础设施<div class="model-shrink"></div></div>
+            <div class="model-content">
+                <div class="base-btns">
+                    <div class="base-btn baseParts selected"><span class="base_icon"></span>基础部件</div>
+                    <div class="base-btn pipe"><span class="base_icon"></span>管网管线</div>
+                    <div class="base-btn heat"><span class="base_icon"></span>供热</div>
+                    <div class="base-btn water"><span class="base_icon"></span>供水</div>
+                    <div class="base-btn electric"><span class="base_icon"></span>供电</div>
+                </div>
+                <div class="baseparts-list">
+                    <ul>
+                        <li class="selected">1 供水泵站</li>
+                        <li>2 排水泵站</li>
+                        <li>3 消防栓</li>
+                        <li>4 加压站</li>
+                        <li>5 水表箱</li>
+                        <li>6 窖井</li>
+                        <li>7 流量监测点</li>
+                        <li>8 水质监测点</li>
+                        <li>9 压力监测点</li>
+                        <li>10 排水监测点</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-    <div class="east-model">
-        <div class="model-header">供水泵站检测器<div class="model-shrink"></div></div>
-        <div class="model-content" style="height:calc(100% - 80px);overflow:auto">
-            <table>
-                <tr>
-                    <th>设备名称</th>
-                    <th>监测数值</th>
-                </tr>
-                <tr>
-                    <td>检测器_A01</td>
-                    <td>14</td>
-                </tr>
-                <tr>
-                    <td>检测器_A02</td>
-                    <td>13</td>
-                </tr>
-                <tr>
-                    <td>检测器_A03</td>
-                    <td>15</td>
-                </tr>
-                <tr>
-                    <td>检测器_A04</td>
-                    <td>18</td>
-                </tr>
-                <tr>
-                    <td>检测器_A05</td>
-                    <td>21</td>
-                </tr>
-                <tr>
-                    <td>检测器_A06</td>
-                    <td>17</td>
-                </tr>
-                <tr class="alarmed">
-                    <td>检测器_A07</td>
-                    <td>36 </td>
-                </tr>
-                <tr>
-                    <td>检测器_A08</td>
-                    <td>13</td>
-                </tr>
-                <tr>
-                    <td>检测器_A09</td>
-                    <td>16</td>
-                </tr>
-                <tr>
-                    <td>检测器_A10</td>
-                    <td>13</td>
-                </tr>
-                <tr>
-                    <td>检测器_A11</td>
-                    <td>11</td>
-                </tr>
-                <tr>
-                    <td>检测器_A12</td>
-                    <td>28</td>
-                </tr>
-                <tr>
-                    <td>检测器_A13</td>
-                    <td>20</td>
-                </tr>
-                <tr>
-                    <td>检测器_A14</td>
-                    <td>16</td>
-                </tr>
-                <tr class="alarmed">
-                    <td>检测器_A15</td>
-                    <td>35</td>
-                </tr>
-                <tr>
-                    <td>检测器_A16</td>
-                    <td>18</td>
-                </tr>
-                <tr>
-                    <td>检测器_A17</td>
-                    <td>13</td>
-                </tr>
-                <tr>
-                    <td>检测器_A18</td>
-                    <td>16</td>
-                </tr>
-                <tr>
-                    <td>检测器_A19</td>
-                    <td>21</td>
-                </tr>
-                <tr>
-                    <td>检测器_A20</td>
-                    <td>15</td>
-                </tr>
-            </table>
+    <div class="east-model">        
+        <div class="model-box jcqlb">
+            <div class="model-header"><span>供水泵站检测器</span><div class="model-shrink"></div></div>
+            <div class="model-content" style="height:calc(100% - 80px);overflow:auto">
+                <table>
+                    <tr>
+                        <th>设备名称</th>
+                        <th>监测数值</th>
+                    </tr>
+                    <tr>
+                        <td>供水泵站检测器_A01</td>
+                        <td>14</td>
+                    </tr>
+                    <tr>
+                        <td>供水泵站检测器_A02</td>
+                        <td>13</td>
+                    </tr>
+                    <tr>
+                        <td>供水泵站检测器_A03</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td>供水泵站检测器_A04</td>
+                        <td>18</td>
+                    </tr>
+                    <tr class="alarmed">
+                        <td>供水泵站检测器_B02</td>
+                        <td>36 </td>
+                    </tr>
+                    <tr>
+                        <td>供水泵站检测器_B01</td>
+                        <td>17</td>
+                    </tr>
+                    <tr>
+                        <td>供水泵站检测器_B03</td>
+                        <td>13</td>
+                    </tr>
+                    <tr>
+                        <td>供水泵站检测器_B04</td>
+                        <td>16</td>
+                    </tr>
+                    <tr>
+                        <td>供水泵站检测器_C01</td>
+                        <td>21</td>
+                    </tr>
+                    <tr>
+                        <td>供水泵站检测器_C02</td>
+                        <td>13</td>
+                    </tr>
+                    <tr>
+                        <td>供水泵站检测器_C03</td>
+                        <td>11</td>
+                    </tr>
+                    <tr>
+                        <td>供水泵站检测器_C04</td>
+                        <td>28</td>
+                    </tr>
+                    <tr>
+                        <td>供水泵站检测器_D01</td>
+                        <td>20</td>
+                    </tr>
+                    <tr>
+                        <td>供水泵站检测器_D02</td>
+                        <td>16</td>
+                    </tr>
+                    <tr class="alarmed">
+                        <td>供水泵站检测器_D03</td>
+                        <td>35</td>
+                    </tr>
+                    <tr>
+                        <td>供水泵站检测器_D04</td>
+                        <td>18</td>
+                    </tr>
+                    <tr>
+                        <td>供水泵站检测器_E01</td>
+                        <td>13</td>
+                    </tr>
+                    <tr>
+                        <td>供水泵站检测器_E02</td>
+                        <td>16</td>
+                    </tr>
+                    <tr>
+                        <td>供水泵站检测器_E03</td>
+                        <td>21</td>
+                    </tr>
+                    <tr>
+                        <td>供水泵站检测器_E04</td>
+                        <td>15</td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 </body>
@@ -293,16 +304,30 @@
         $('.model-content tr:even td').css('background','#062955')
 
         $('.baseparts-list li').click(function(){
+            $('.model-content tr.alarmed').removeClass('alarmed');
             $(this).addClass('selected').siblings().removeClass('selected');
-            //gis基础部件点击
             addjichubujian($(this).text());
+            var texts = $(this).text().split(' ')[1]+'监测器';
+            $('.model-box.jcqlb').find('.model-header span').text(texts);
+            var lists = $('.model-content tr>td:first-child');
+            for(var i=0;i<lists.length;i++){        
+                var equip = $(lists[i]).text().replace(/([^\u0000-\u00FF])+/g,texts); 
+                $(lists[i]).text(equip);
+                var value = Math.floor(Math.random()*30)+10;
+                $(lists[i]).next().text(value);
+                if(value>30){
+                    $(lists[i]).parent().addClass('alarmed');
+                }
+            }
+>>>>>>> 3f903b4c295018e7d28b087b64f50d7f644f7808
         })
 
         $('.model-shrink').click(function(){
             if($(this).hasClass('down')){
                 $(this).removeClass('down');
                 $(this).parent().next().slideDown();
-                $(this).parents('.model-box').css('height','50%');
+                $(this).parents('.model-box').css('height','100%');
+                $(this).parents('.model-box')
             }else{
                 $(this).addClass('down');
                 $(this).parent().next().slideUp();
