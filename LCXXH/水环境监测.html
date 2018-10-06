@@ -7,7 +7,8 @@
 <script src="js/echarts.js"></script>
 <link href="css/hcstyle.css" rel="stylesheet">
 <link href="css/common.css" rel="stylesheet">
-<script src="js/hcjs.js"></script>
+    <script src="js/gis_water.js"></script>
+    <script src="js/hcjs.js"></script>
 <style>
 	html,body{
 		width: 100%;
@@ -312,10 +313,13 @@
 	function onClick(event, treeId, treeNode, clickFlag) {
 		treeObj = $.fn.zTree.getZTreeObj("example");
 		nodes = treeObj.getSelectedNodes();
-		if(!treeNode.isParent){	
+		if(!treeNode.isParent){
 			$(".level2.selected").removeClass("selected");
 			$("#"+treeNode.tId).addClass("selected").siblings().removeClass("selected");				
-			$(".company-handle-btns").show();					
+			$(".company-handle-btns").show();
+			//gis定位冒泡
+            debugger
+            showPupoInfo(treeNode.getParentNode().name);
 		}
 	}
 	

@@ -20,10 +20,15 @@
     border-right: 1px solid rgba(229,229,229,0.25);
 }
 .popupTab tr.odd{
-    background:rgba(72,72,72,0.8);
+    background:rgba(18,64,123,0.8);
     height: 28px;
 }
 .popupTab tr.even{
-    background:rgba(122,122,122,0.2);
+    background:rgba(16,59,112,0.2);
     height: 28px;
+}
+.record{
+    color: #fff;
+    font-size: 12px;
+    text-align: right;
 }
