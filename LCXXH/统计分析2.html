@@ -18,14 +18,18 @@
 		box-sizing: border-box;
 	}
 	.model-box{
-		width: 33.33%;
+		width: 55%;
 		height: 50%;
 		float: left;
 		padding: 0 10px 10px 0;
 		box-sizing: border-box;
 	}
-	.model-box.wryndfx{
-		width: 66.66%;
+	.model-box.dqwryfb,.model-box.shjzljc{
+		width: 45%;
+	}
+	.model-box.szfxbb{
+		width: 50%;
+		height: 100%;
 	}
 	.chart-container{
 		height: 100%;
@@ -59,6 +63,7 @@
 		border: 1px solid #0072ff;  
 		border-top: none;   
 		position: relative;
+		overflow: auto;
 	}
 	.base-btns{	
 		margin: 15px 15px 0 0;
@@ -200,75 +205,123 @@
 	.model-header .time-select{
 		margin: 5px 15px;
 	}
+	.model-content table{
+        width: 100%;
+		height: 100%;
+        border-collapse: collapse;
+        background-color: #092141;
+    }
+    .model-content th,.model-content td{
+        height: 35px;
+        border: 1px solid #325ca2;
+        color: #fff;
+        text-align: center;
+    }
+    .model-content th{
+        background-color: #062955;
+    }
+    .model-content tr.selected:not(:first-child) td,.model-content tr:hover:not(:first-child) td{
+        background-color: #0072ff!important;
+        cursor: pointer;
+    }
 
 </style>
 </head>
 <body>
-	<div class="model-box dqwryfb">
-		<div class="chart-container">
-			<div class="model-header">大气污染源分布			
-				<div class="time-select">
-					<select>
-						<option>2018年1月</option>
-						<option>2018年2月</option>
-						<option>2018年3月</option>
-						<option>2018年4月</option>
-						<option>2018年5月</option>
-						<option>2018年6月</option>
-						<option>2018年7月</option>
-						<option>2018年8月</option>
-						<option>2018年9月</option>
-						<option selected>2018年10月</option>
-					</select>
+	<div style="width:50%;height:100%;float:left">
+		<div class="model-box dqwryfb">
+			<div class="chart-container">
+				<div class="model-header">大气污染源分布			
+					<div class="time-select">					
+						<select>
+							<option selected>东昌府区</option>
+							<option>茌平县</option>
+							<option>东阿县</option>
+							<option>冠县</option>
+							<option>高唐县</option>
+							<option>阳谷县</option>
+							<option>莘县</option>
+						</select>
+					</div>
+				</div>
+				<div class="model-content"> 
+					<div id="pie_chart"></div>
 				</div>
 			</div>
-			<div class="model-content"> 
-				<div id="pie_chart"></div>
-			</div>
 		</div>
-	</div>
-	<div class="model-box wryndfx">
-		<div class="chart-container">
-			<div class="model-header">大气污染源年度分析(mg/m)</div>
-			<div class="model-content">
-				<div id="bar_chart_v"></div>
-			</div>
-		</div>			
-	</div>
-	<div class="model-box hjtbfx">
-		<div class="chart-container">
-			<div class="model-header">年度环境质量同比分析</div>
-			<div class="model-content">	
-				<div class="circle_box">
-					<div id="circle_chart"></div>		
+		<div class="model-box wryndfx">
+			<div class="chart-container">
+				<div class="model-header">过去24小时空气质量指数趋势								
+					<div class="time-select">					
+						<select>
+							<option selected>东昌府区</option>
+							<option>茌平县</option>
+							<option>东阿县</option>
+							<option>冠县</option>
+							<option>高唐县</option>
+							<option>阳谷县</option>
+							<option>莘县</option>
+						</select>
+					</div>
+				</div>
+				<div class="model-content">
+					<div id="bar_chart_v"></div>
+				</div>
+			</div>			
+		</div>
+		<div class="model-box shjzljc">
+			<div class="chart-container">
+				<div class="model-header">声环境质量监测分布情况								
+					<div class="time-select">					
+						<select>
+							<option selected>东昌府区</option>
+							<option>茌平县</option>
+							<option>东阿县</option>
+							<option>冠县</option>
+							<option>高唐县</option>
+							<option>阳谷县</option>
+							<option>莘县</option>
+						</select>
+					</div>
+				</div>
+				<div class="model-content">		
+					<div id="ring_chart"></div>
+				</div>
+			</div>			
+		</div>
+		<div class="model-box qxnhph">
+			<div class="chart-container">
+				<div class="model-header">各区县污染排行
+					<div class="time-select">
+						<select>
+							<option>2018年1月</option>
+							<option>2018年2月</option>
+							<option>2018年3月</option>
+							<option>2018年4月</option>
+							<option>2018年5月</option>
+							<option>2018年6月</option>
+							<option>2018年7月</option>
+							<option>2018年8月</option>
+							<option>2018年9月</option>
+							<option selected>2018年10月</option>
+						</select>
+					</div>
+				</div>
+				<div class="model-content">	
 					<div class="base-btns">
-						<div class="base-btn water selected">空气质量</div>
-						<div class="base-btn electric">饮用水质量</div>
-					</div>
+						<div class="base-btn water selected">水污染</div>
+						<div class="base-btn electric">大气污染</div>
+						<div class="base-btn heat">声污染</div>
+					</div>		
+					<div class="clear"></div>
+					<div id="bar_chart_h"></div>
 				</div>
-				<div class="circle-info">		
-					<div class="thisYear">
-						<span></span><br>
-						<span>2018年</span><br>
-						<span>169</span>
-					</div>
-					<div class="lastYear">
-						<span></span><br>
-						<span>2017年</span><br>
-						<span>128</span>
-					</div>
-					<div class="yearBeforeLast">
-						<span></span><br>
-						<span>2016年</span><br>
-						<span>137</span>
-					</div>	
-				</div>	
-			</div>	
+			</div>			
 		</div>
 	</div>
-	<div class="model-box qxnhph">
+	<div class="model-box szfxbb">
 		<div class="chart-container">
-			<div class="model-header">各区县污染排行
+			<div class="model-header">水质分析报表
 				<div class="time-select">
 					<select>
 						<option>2018年1月</option>
@@ -284,22 +337,285 @@
 					</select>
 				</div>
 			</div>
-			<div class="model-content">	
-				<div class="base-btns">
-					<div class="base-btn water selected">水污染</div>
-					<div class="base-btn electric">大气污染</div>
-					<div class="base-btn heat">声污染</div>
-				</div>		
-				<div class="clear"></div>
-				<div id="bar_chart_h"></div>
-			</div>
-		</div>			
-	</div>
-	<div class="model-box hjzltbfx">
-		<div class="chart-container">
-			<div class="model-header">水质类别比例</div>
-			<div class="model-content">		
-				<div id="ring_chart"></div>
+			<div class="model-content" style="height:calc(100% - 81px);padding:15px;">
+				<table>
+					<tr>
+						<th>监测项目</th>
+						<th>标准值</th>
+						<th>东昌府区</th>
+						<th>临清市</th>
+						<th>茌平县</th>
+						<th>东阿县</th>
+						<th>冠县</th>
+						<th>高唐县</th>
+						<th>阳谷县</th>
+						<th>莘县</th>
+					</tr>
+					<tr class="unchange">
+						<td>色度(度)</td>
+						<td>≤15</td>
+						<td>≤5</td>
+						<td>≤5</td>
+						<td>≤5</td>
+						<td>≤5</td>
+						<td>≤5</td>
+						<td>≤5</td>
+						<td>≤5</td>
+						<td>≤5</td>
+					</tr>
+					<tr>
+						<td>浑浊度(TPU)</td>
+						<td>≤1</td>
+						<td>0.28</td>
+						<td>0.38</td>
+						<td>0.33</td>
+						<td>0.32</td>
+						<td>0.47</td>
+						<td>0.54</td>
+						<td>0.29</td>
+						<td>0.32</td>
+					</tr>
+					<tr>
+						<td>PH</td>
+						<td>6.5~8.5</td>
+						<td>7.00</td>
+						<td>7.07</td>
+						<td>7.58</td>
+						<td>7.36</td>
+						<td>7.42</td>
+						<td>7.05</td>
+						<td>7.19</td>
+						<td>7.23</td>
+					</tr>
+					<tr>
+						<td>总硬度(mg/L)</td>
+						<td>≤450</td>
+						<td>103.42</td>
+						<td>107.64</td>
+						<td>98.34</td>
+						<td>103.21</td>
+						<td>125.23</td>
+						<td>99.58</td>
+						<td>91.35</td>
+						<td>104.56</td>
+					</tr>
+					<tr class="unchange">
+						<td>铝(mg/L)</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+					</tr>
+					<tr class="unchange">
+						<td>铁(mg/L)</td>
+						<td>≤0.3</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+					</tr>
+					<tr class="unchange">
+						<td>锌(mg/L)</td>
+						<td>≤1.0</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+					</tr>
+					<tr>
+						<td>耗氧量(mg/L)</td>
+						<td>≤3</td>
+						<td>0.9</td>
+						<td>1.0</td>
+						<td>0.9</td>
+						<td>0.8</td>
+						<td>0.8</td>
+						<td>1.0</td>
+						<td>0.9</td>
+						<td>0.8</td>
+					</tr>
+					<tr>
+						<td>氨氮(mg/L)</td>
+						<td>≤0.5</td>
+						<td>0.03</td>
+						<td>0.03</td>
+						<td>0.02</td>
+						<td>0.02</td>
+						<td>0.03</td>
+						<td>0.03</td>
+						<td>0.02</td>
+						<td>0.03</td>
+					</tr>
+					<tr class="unchange">
+						<td>氰化物(mg/L)</td>
+						<td>≤0.0.5</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+						<td>≤0.02</td>
+					</tr>
+					<tr>
+						<td>砷(mg/L)</td>
+						<td>≤0.01</td>
+						<td>0.0011</td>
+						<td>0.0012</td>
+						<td>0.0014</td>
+						<td>0.0011</td>
+						<td>0.0012</td>
+						<td>0.0011</td>
+						<td>0.0012</td>
+						<td>0.0013</td>
+					</tr>
+					<tr class="unchange">
+						<td>硒(mg/L)</td>
+						<td>≤0.01</td>
+						<td>≤0.001</td>
+						<td>≤0.001</td>
+						<td>≤0.001</td>
+						<td>≤0.001</td>
+						<td>≤0.001</td>
+						<td>≤0.001</td>
+						<td>≤0.001</td>
+						<td>≤0.001</td>
+					</tr>
+					<tr class="unchange">
+						<td>汞(mg/L)</td>
+						<td>≤0.001</td>
+						<td>≤0.00005</td>
+						<td>≤0.00005</td>
+						<td>≤0.00005</td>
+						<td>≤0.00005</td>
+						<td>≤0.00005</td>
+						<td>≤0.00005</td>
+						<td>≤0.00005</td>
+						<td>≤0.00005</td>
+					</tr>
+					<tr class="unchange">
+						<td>铬(mg/L)</td>
+						<td>≤0.05</td>
+						<td>≤0.004</td>
+						<td>≤0.004</td>
+						<td>≤0.004</td>
+						<td>≤0.004</td>
+						<td>≤0.004</td>
+						<td>≤0.004</td>
+						<td>≤0.004</td>
+						<td>≤0.004</td>
+					</tr>
+					<tr class="unchange">
+						<td>镉mg/L)</td>
+						<td>≤0.005</td>
+						<td>≤0.001</td>
+						<td>≤0.001</td>
+						<td>≤0.001</td>
+						<td>≤0.001</td>
+						<td>≤0.001</td>
+						<td>≤0.001</td>
+						<td>≤0.001</td>
+						<td>≤0.001</td>
+					</tr>
+					<tr class="unchange">
+						<td>铅(mg/L)</td>
+						<td>≤0.01</td>
+						<td>≤0.001</td>
+						<td>≤0.001</td>
+						<td>≤0.001</td>
+						<td>≤0.001</td>
+						<td>≤0.001</td>
+						<td>≤0.001</td>
+						<td>≤0.001</td>
+						<td>≤0.001</td>
+					</tr>
+					<tr>
+						<td>三氯甲烷(mg/L)</td>
+						<td>≤0.06</td>
+						<td>0.043</td>
+						<td>0.029</td>
+						<td>0.013</td>
+						<td>0.015</td>
+						<td>0.022</td>
+						<td>0.057</td>
+						<td>0.023</td>
+						<td>0.019</td>
+					</tr>
+					<tr class="unchange">
+						<td>四氯化碳(mg/L)</td>
+						<td>≤0.002</td>
+						<td>≤0.0005</td>
+						<td>≤0.0005</td>
+						<td>≤0.0005</td>
+						<td>≤0.0005</td>
+						<td>≤0.0005</td>
+						<td>≤0.0005</td>
+						<td>≤0.0005</td>
+						<td>≤0.0005</td>
+					</tr>
+					<tr>
+						<td>菌落总数(CFU/mmL)</td>
+						<td>≤100</td>
+						<td>1</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>1</td>
+						<td>1</td>
+						<td>0</td>
+					</tr>
+					<tr class="unchange">
+						<td>总大肠杆菌群(CFU/100mL)</td>
+						<td>不得检出</td>
+						<td>未检出</td>
+						<td>未检出</td>
+						<td>未检出</td>
+						<td>未检出</td>
+						<td>未检出</td>
+						<td>未检出</td>
+						<td>未检出</td>
+						<td>未检出</td>
+					</tr>
+					<tr class="unchange">
+						<td>耐热大肠菌群(CFU/100mL)</td>
+						<td>不得检出</td>
+						<td>未检出</td>
+						<td>未检出</td>
+						<td>未检出</td>
+						<td>未检出</td>
+						<td>未检出</td>
+						<td>未检出</td>
+						<td>未检出</td>
+						<td>未检出</td>
+					</tr>
+					<tr>
+						<td>游离氯(mg/L)</td>
+						<td>≥0.05</td>
+						<td>0.45</td>
+						<td>0.25</td>
+						<td>0.40</td>
+						<td>0.20</td>
+						<td>0.35</td>
+						<td>0.24</td>
+						<td>0.29</td>
+						<td>0.36</td>
+					</tr>
+				</table>
 			</div>
 		</div>			
 	</div>
@@ -318,7 +634,7 @@
 				orient : 'vertical',
 				x : 'right',
 				y : 'center',
-				padding: 50,
+				padding: 30,
 				itemGap : 25,
 				textStyle:{
 					color: '#fff'
@@ -330,7 +646,7 @@
 				{
 					name:'大气污染源分布',
 					type:'pie',
-					radius : '75%',
+					radius : '60%',
 					center: ['40%', '50%'],  
 					itemStyle : {
 						normal : {
@@ -345,24 +661,14 @@
 		};
 
 		var bar_v_option = {
-			color : ['#fff000','#fa8d00','#c7113a','#7034c1','#1dd9f5','#19b596'],
+			color : ['#19b596','#fff000','#ff4936','#c7113a','#7a062f','#4c0950'],
 			tooltip : {
 				trigger: 'axis'
 			},
-			legend: {
-				x : 'center',
-				y : 'top',
-				padding: 30,
-				itemGap : 25,
-				textStyle:{
-					color: '#fff'
-				},
-				data:['PM2.5','PM10','CO','SO2','NO2','O3']
-			},
 			grid:{
-				x:70,
+				x:50,
 				y:60,
-				x2:30,
+				x2:15,
 				y2:50
 			},
 			yAxis : [{
@@ -397,120 +703,23 @@
 						fontFamily : '微软雅黑'
 					}
 				},
-				data :[2013,2014,2015,2016,2017,2018]
+				data:['12时','13时','14时','15时','16时','17时','18时','19时','20时','21时','22时','23时','0时','1时','2时','3时','4时','5时','6时','7时','8时','9时','10时','11时']
 			}],
 			series : [{
-				name:'PM2.5',
+				name:'空气质量指数',
 				type:'bar',
-				barWidth: 12,                    
+				barWidth: 10,                    
 				itemStyle : {
 					normal : {
-						barBorderRadius:[6,6,6,6]
+						barBorderRadius:[6,6,6,6],
 					}
 				},
-				data:[118,94,83,64,23,56]
-			},{
-				name:'PM10',
-				type:'bar',
-				barWidth: 12,                    
-				itemStyle : {
-					normal : {
-						barBorderRadius:[6,6,6,6]
-					}
-				},
-				data:[75,34,24,74,86,89]
-			},{
-				name:'CO',
-				type:'bar',
-				barWidth: 12,                    
-				itemStyle : {
-					normal : {
-						barBorderRadius:[6,6,6,6]
-					}
-				},
-				data:[53,57,72,93,104,39]
-			},{
-				name:'SO2',
-				type:'bar',
-				barWidth: 12,                    
-				itemStyle : {
-					normal : {
-						barBorderRadius:[6,6,6,6]
-					}
-				},
-				data:[86,89,53,57,72,94]
-			},{
-				name:'NO2',
-				type:'bar',
-				barWidth: 12,                    
-				itemStyle : {
-					normal : {
-						barBorderRadius:[6,6,6,6]
-					}
-				},
-				data:[72,93,104,34,52,15]
-			},{
-				name:'O3',
-				type:'bar',
-				barWidth: 12,                    
-				itemStyle : {
-					normal : {
-						barBorderRadius:[6,6,6,6]
-					}
-				},
-				data:[11,87,34,75,67,48]
+				data:[48,46,43,41,41,34,32,42,30,28,35,43,52,43,50,57,63,62,59,54,48,46,43,43]
 			}]
 		}; 
 
-		var dataStyle = {
-			normal: {
-				label: {show:false},
-				labelLine: {show:false}
-			}
-		};
-		var labelOther = {
-			normal : {
-				color: '#143e84',
-				label: {show:false},
-				labelLine: {show:false}
-			}
-		};
-		var circle_option = {
-			color:['#1dd9f5','#fff000','#c7113a'],
-			tooltip : {
-				show: true,
-				formatter: "{a} <br/>{b} : {c} ({d}%)"
-			},
-			series : [{
-				name:'年度同比分析',
-				type:'pie',
-				radius : ['75%', '85%'],
-				itemStyle : dataStyle,
-				data:[
-					{value:57,name:'all',itemStyle : labelOther },
-					{value:43,name:'2018年'}
-				]},{
-				name:'年度同比分析',
-				type:'pie',
-				radius : ['55%','65%'],
-				itemStyle : dataStyle,
-				data:[
-					{value:29,name:'all',itemStyle : labelOther},
-					{value:71,name:'2017年'}
-				]},{
-				name:'年度同比分析',
-				type:'pie',
-				radius : ['35%','45%'],
-				itemStyle : dataStyle,
-				data:[
-					{value:65,name:'all',itemStyle : labelOther},
-					{value:35, name:'2016年'}
-				]}
-			]
-		};
-
 		var bar_h_option = {
-			color:['#1dd9f5'],
+			color:['#1d97f5'],
 			tooltip : {
 				trigger: 'axis'
 			},
@@ -562,7 +771,7 @@
 				type:'pie',
 				roseType: 'radius',
 				radius : ['55%', '75%'],
-				data:[{value:26, name:'一类'},{value:19, name:'二类'},{value:38, name:'三类'},{value:32, name:'四类'}]
+				data:[{value:26, name:'交通运输噪声'},{value:19, name:'社会生活噪声'},{value:38, name:'建设施工噪声'},{value:32, name:'工业噪声'}]
 			}]
 		};	
 
@@ -570,10 +779,7 @@
 		pie_chart.setOption(pie_option);
 
 		var bar_chart_v = echarts.init(document.getElementById("bar_chart_v")); 
-		bar_chart_v.setOption(bar_v_option);	
-
-		var circle_chart = echarts.init(document.getElementById("circle_chart")); 
-		circle_chart.setOption(circle_option);	
+		bar_chart_v.setOption(bar_v_option);		
 
 		var bar_chart_h = echarts.init(document.getElementById("bar_chart_h")); 
 		bar_chart_h.setOption(bar_h_option);
@@ -592,56 +798,35 @@
 		$('.time-select').change(function(){
 			changeChartData(this);
 		})  
+
+		
+        $('.model-content tr:even td').css('background','#062955')
 			
 		function changeChartData(that){
 			var parents = $(that).parents('.model-box');
 			if(parents.hasClass('dqwryfb')){					
-				var data = [{value:Math.floor(Math.radom()*230)+20, name:'PM2.5'},{value:Math.floor(Math.radom()*180)+20, name:'PM10'},{value:5, name:'CO'},{value:13, name:'SO2'},{value:8, name:'NO2'},{value:6, name:'O3'}];
+				var data = [{value:Math.floor(Math.random()*200)+20, name:'PM2.5'},{value:Math.floor(Math.random()*160)+20, name:'PM10'},{value:Math.floor(Math.random()*10)+5, name:'CO'},{value:Math.floor(Math.random()*20)+5, name:'SO2'},{value:Math.floor(Math.random()*20)+5, name:'NO2'},{value:Math.floor(Math.random()*15)+5, name:'O3'}];
 				pie_option.series[0].data = data;
 				pie_chart.setOption(pie_option,true); 
-			}else if(parents.hasClass('nhytfx')){
-				var data = [{value:Math.random()*40+10, name:'Ⅳ类'},
-							{value:Math.random()*40+10, name:'Ⅲ类'},
-							{value:Math.random()*40+10, name:'Ⅱ类'},
-							{value:Math.random()*40+10, name:'Ⅰ类'}];
-				pie_option.series[0].data = data;
-				pie_chart.setOption(pie_option); 
+			}else if(parents.hasClass('shjzljc')){
+				var data = [{value:Math.random()*40+10, name:'交通运输噪声'},
+							{value:Math.random()*40+10, name:'社会生活噪声'},
+							{value:Math.random()*40+10, name:'建设施工噪声'},
+							{value:Math.random()*40+10, name:'工业噪声'}];
+				ring_option.series[0].data = data;
+				ring_chart.setOption(ring_option); 
 			}else if(parents.hasClass('qxnhph')){
-				var data = [Math.floor(Math.random()*100)+20, ,Math.floor(Math.random()*15000)+30000, Math.floor(Math.random()*15000)+45000, Math.floor(Math.random()*15000)+50000,Math.floor(Math.random()*15000)+65000,Math.floor(Math.random()*15000)+80000,Math.floor(Math.random()*15000)+95000];;
+				var data = [Math.floor(Math.random()*10000)+10000, Math.floor(Math.random()*10000)+20000 ,Math.floor(Math.random()*15000)+30000, Math.floor(Math.random()*10000)+45000, Math.floor(Math.random()*15000)+50000,Math.floor(Math.random()*15000)+65000,Math.floor(Math.random()*15000)+80000,Math.floor(Math.random()*15000)+95000];;
 				bar_h_option.series[0].data = data;
 				bar_chart_h.setOption(bar_h_option,true); 
-			}else if(parents.hasClass('gjcdsj')){
-				var dates =$('.gjcdsj .time-select select').val().match(/\d+/g);
-				var days =  new Date(dates[0],dates[1],0).getDate();
+			}else if(parents.hasClass('wryndfx')){
 				var data = [];
-				for(var i =1;i<=days;i++){
-					data.push(Math.floor(Math.random()*100)+20);
+				for(var i=0;i<24;i++){
+					data.push(Math.floor(Math.random()*50)+20);
 				}
 				bar_v_option.series[0].data = data;
 				bar_chart_v.setOption(bar_v_option,true); 
-			}else if(parents.hasClass('ndtbfx')){
-				var data = {
-					'thisYear':[{value:Math.random()*80+20,name:'all',itemStyle : labelOther},{value:Math.random()*80+20, name:'2018年'}],
-					'lastYear':[{value:Math.random()*80+20,name:'all',itemStyle : labelOther},{value:Math.random()*80+20, name:'2017年'}],
-					'yearBeforeLast':[{value:Math.random()*80+20,name:'all',itemStyle : labelOther},{value:Math.random()*80+20, name:'2016年'}]
-				};
-				circle_option.series[0].data = data.thisYear;
-				circle_option.series[1].data = data.lastYear;
-				circle_option.series[2].data = data.yearBeforeLast;
-				circle_chart.setOption(circle_option,true); 
-				$('.thisYear span:last-child').text(Math.floor(Math.random()*500)+1000);
-				$('.lastYear span:last-child').text(Math.floor(Math.random()*500)+1000);
-				$('.yearBeforeLast span:last-child').text(Math.floor(Math.random()*500)+1000);
-			}else if(parents.hasClass('gjcdsj')){
-				var dates =$('.gjcdsj .time-select select').val().match(/\d+/g);
-				var days =  new Date(dates[0],dates[1],0).getDate();
-				var data = [];
-				for(var i =1;i<=days;i++){
-					data.push(Math.floor(Math.random()*100)+20);
-				}
-				bar_v_option.series[0].data = data;
-				bar_chart_v.setOption(bar_v_option,true); 
-			}			
+			}		
 			var text = ($(that).hasClass('water')?'Wm³':($(that).hasClass('heat')?'MJ':'MW'));
 			$(that).parents('.model-box').find('.model-header span').text(text);
 		}

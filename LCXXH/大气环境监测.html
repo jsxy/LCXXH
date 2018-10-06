@@ -21,12 +21,10 @@
 
      .west-model{
         width: 355px;
+        height: calc(100% - 35px);
         position: absolute;
         top:15px;
         left:20px;
-        bottom: 20px;
-        background-color: #09254c;
-        overflow: hidden;
     }
     .east-model{
         width: 455px;
@@ -38,10 +36,12 @@
     }
     .model-box{
         height: 50%;
-		padding-bottom: 10px;
         box-sizing: border-box;
+        background-color: #09254c;
         position: relative;
+		border: 1px solid #0072ff;  
         transition: height 2s;
+        overflow: hidden;
     }
     .model-header{
         width: 428px;
@@ -50,9 +50,7 @@
 		background-color: #143e84;
 		color: #fff;
 		font-size: 18px;  
-		padding-left: 25px;   
-		border: 1px solid #0072ff;  
-		border-bottom: none;     
+		padding-left: 25px;     
 		border-radius: 3px 3px 0 0;         
     }
     .model-header:before{
@@ -79,8 +77,6 @@
 	.model-content{
 		height: calc(100% - 50px);
 		background: #09254c;
-		border: 1px solid #0072ff;  
-		border-top: none;   
 		position: relative;
 	}
 
@@ -114,6 +110,14 @@
     .dqhjjc .model-header{
         width: 328px;
     }
+    .ztree-box{
+        width: 95%;
+        height: calc(100% - 20px);
+        box-sizing: border-box;
+        background-color: #0a3163;
+        margin: 10px auto;
+        overflow: auto;
+    }
 
 </style>
 </head>
@@ -125,13 +129,15 @@
         <div class="model-box dqhjjc">
             <div class="model-header">大气环境监测<div class="model-shrink"></div></div>
             <div class="model-content">
-                <ul id="example" class="ztree"></ul>
+                <div class="ztree-box">
+                    <ul id="example" class="ztree"></ul>
+                </div>
             </div>
         </div>
     </div>
 	<div class="east-model">
-        <div class="model-box">
-            <div class="model-header">大气环境监测器<div class="model-shrink"></div></div>
+        <div class="model-box dqhjjcq">
+            <div class="model-header"><span>大气环境监测器A_01</span><div class="model-shrink"></div></div>
             <div class="model-content">
                 <div id="gauge_chart"></div>                
                 <table class="air-quality">
@@ -160,14 +166,15 @@
 </body>
 
 <script>
-var setting = {
+    
+    var curMenu = null, treeObj = null, gauge_option={},gauge_chart;
+    var setting = {
         view : {
             dblClickExpand : false,
             fontCss: getFont,
             showLine: false
         },
         callback: {
-            beforeClick:beforeClick,
             onClick: onClick
         }
     };
@@ -214,7 +221,7 @@ var setting = {
         },
         { name:"东阿县", open:false, iconSkin:"picon", 
             children: [
-                { name:"大气环境检测器C_01"},
+                { name:"大气环境检测器D_01"},
                 { name:"大气环境检测器D_02"},
                 { name:"大气环境检测器D_03"},
                 { name:"大气环境检测器D_04"},
@@ -280,35 +287,29 @@ var setting = {
     function getFont(treeId, node) {
         return (!!node.highlight)?{color:"red","font-weight":"bold","text-decoration":"none"}:{color:"#fff","font-weight":"normal","text-decoration":"none"};
     }
-    
-    function beforeClick(treeId, treeNode, clickFlag){
-        return ($(".list-table-input.edit").length == 0);
-    }
 
     function onClick(event, treeId, treeNode, clickFlag) {
-        treeObj = $.fn.zTree.getZTreeObj("example");
         nodes = treeObj.getSelectedNodes();
+        var name = nodes[0].name;
+        $('.dqhjjcq .model-header span').text(name);
         if(!treeNode.isParent){	
-            $(".level2.selected").removeClass("selected");
-            $("#"+treeNode.tId).addClass("selected").siblings().removeClass("selected");				
-            $(".company-handle-btns").show();					
-        }
-    }
-    
-    function selectTree(vehicleCompanyId){
-        var treeObj = $.fn.zTree.getZTreeObj("example");
-        var nodes = treeObj.getNodeByParam("companyId", vehicleCompanyId, null);
-        if (nodes) {
-            treeObj.selectNode(nodes);
-            treeObj.expandNode(nodes, true, true, true);
-        }
+			$(".level1.selected").removeClass("selected");
+			$("#"+treeNode.tId).addClass("selected").siblings().removeClass("selected");				
+		}
+        var data = [{value: Math.floor(Math.random()*100)+20}];
+        gauge_option.series[0].data = data;
+        gauge_chart.setOption(gauge_option,true); 
     }	
     
     $(function(){
 
-        $.fn.zTree.init($("#example"), setting, zNodes);  
+        $.fn.zTree.init($("#example"), setting, zNodes);   
+        treeObj = $.fn.zTree.getZTreeObj("example");
+        curMenu = treeObj.getNodes()[0].children[0];
+        treeObj.selectNode(curMenu);
+        $("#" +curMenu.tId).addClass("selected");
 
-        var gauge_option =  {
+        gauge_option =  {
             tooltip : {
                 formatter: "{a} {c}"
             },
@@ -354,19 +355,19 @@ var setting = {
                         },
                         formatter:'AQI {value}',
                     },
-                    data:[{value: 98}]
-                }
-            ]
+                data:[{value: 98}]
+            }]
         };
 
-        var gauge_chart = echarts.init(document.getElementById("gauge_chart")); 
+        gauge_chart = echarts.init(document.getElementById("gauge_chart")); 
 		gauge_chart.setOption(gauge_option);
 
         $('.model-shrink').click(function(){
             if($(this).hasClass('down')){
                 $(this).removeClass('down');
                 $(this).parent().next().slideDown();
-                $(this).parents('.model-box').css('height','50%');
+                var height = ( $(this).parents('.model-box').hasClass('dqhjjc')?'100%':'50%');
+                $(this).parents('.model-box').css('height',height);
             }else{
                 $(this).addClass('down');
                 $(this).parent().next().slideUp();
@@ -374,11 +375,6 @@ var setting = {
             }
         })
 
-        /* clearInterval(timeTicket);
-        timeTicket = setInterval(function (){
-            gauge_option.series[0].data[0].value = (Math.random()*100).toFixed(2) - 0;
-            gauge_chart.setOption(gauge_option, true);
-        },2000); */
 	});
 
 </script>
