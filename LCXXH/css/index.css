@@ -69,16 +69,16 @@ z-index:10;
 }
 #menu>.k-item.k-state-default {
     height: 68px;
-    background: #144788;
+    background: #19272d;
     border: none;
     margin-right: 2px;
 }
 #menu>.k-item.k-state-default.current{
-    background: #0072ff;
+    background: #383e46;
 }
-#menu>li>a:hover{
-	color:#1ab38d;
-}
+/*#menu>li>a:hover{*/
+	/*color:#1ab38d;*/
+/*}*/
 .k-menu>.k-item>.k-link {
     color:#fff;
     height: 100%;
@@ -97,11 +97,11 @@ z-index:10;
 .k-menu .k-group {
     width:130px;
     border:none;
-    background:#2b4869;
+    background:#122027;
     opacity:0.9;
 }
 #menu .k-animation-container .k-item.k-state-default:hover, #menu .k-animation-container .k-item.k-state-default.current{
-	background:#068dc3;
+	background:#383e46;
     top:0;
     padding:0;
 }

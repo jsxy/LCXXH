@@ -26,7 +26,7 @@ ul,li{
 }
 
 body{
-	background: #09254c;
+	background: #122027;
 }
 
 .ui-layout-pane{
@@ -48,7 +48,7 @@ body{
     height: 32px;
     line-height: 32px;
     text-align-last: center;
-    border: 1px solid #0072ff;
+    border: 1px solid #383e46;
     background-color: transparent;
     color: #fff;
     margin: 0 5px 10px 5px;
@@ -56,7 +56,7 @@ body{
     cursor: pointer;
 }
 .base-btn:hover,.base-btn.selected{
-    background-color: #0072ff;
+    background-color: #383e46;
 }
 .baseParts,.pipe{
     width: 138px;
@@ -68,7 +68,7 @@ body{
     width: 164px;
     height: 38px;
     background: transparent;
-    border: 1px solid #0072ff;
+    border: 1px solid #383e46;
     float: right;
     text-align: center;
     margin: 15px 5px 0 0;
@@ -135,7 +135,7 @@ body{
     background: url("../images/ztree.png") no-repeat scroll -32px -18px transparent;
 }
 .ztree li.selected{
-    background:#0072ff;
+    background:#383e46;
 }
 .ztree li span.button.level0.switch {
     margin-left: 20px;

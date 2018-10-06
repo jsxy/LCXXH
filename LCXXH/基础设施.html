@@ -21,16 +21,16 @@
     }
     .model-box{
         height: 100%;
-        border: 1px solid #0072ff;
+        /*border: 1px solid #383e46;*/
         box-sizing: border-box;
         transition: height 2s;
-        background-color: #09254c;
+        background-color: #122027;
         overflow: hidden;
     }
     .model-header{
         height: 50px; 
 		line-height: 50px; 
-		background-color: #143e84;
+		background-color: #19272D;
 		color: #fff;
 		font-size: 18px; 
 		padding-left: 25px;      
@@ -71,7 +71,7 @@
         height: 32px;
         line-height: 32px;
         text-align-last: center;
-        border: 1px solid #0072ff;
+        border: 1px solid #383e46;
         background-color: transparent;
         color: #fff;
         margin: 0 5px 10px 5px;
@@ -79,7 +79,7 @@
         cursor: pointer;
     }
     .base-btn:hover,.base-btn.selected{
-        background-color: #0072ff;
+        background-color: #383e46;
     }
     .baseParts,.pipe{
         width: 138px;
@@ -112,7 +112,7 @@
     }
     .baseparts-list ul{
         display: inline-block;
-        background-color: #0a3163;
+        background-color: #19272D;
         margin-bottom: 10px;
     }
     .baseparts-list li{
@@ -124,7 +124,7 @@
         cursor: pointer;
     }
     .baseparts-list li:hover,.baseparts-list li.selected{
-        background-color: #0072ff;
+        background-color: #383e46;
     }
 
     .east-model{
@@ -138,19 +138,19 @@
     .model-content table{
         width: 100%;
         border-collapse: collapse;
-        background-color: #092141;
+        background-color: #1e2023;
     }
     .model-content th,.model-content td{
         height: 35px;
-        border: 1px solid #325ca2;
+        border: 1px solid #383e46;
         color: #fff;
         text-align: center;
     }
     .model-content th{
-        background-color: #062955;
+        background-color: #2b2f33;
     }
     .model-content tr.selected:not(:first-child) td,.model-content tr:hover:not(:first-child) td{
-        background-color: #0072ff!important;
+        background-color: #383e46!important;
         cursor: pointer;
     }
     .model-content tr.alarmed{
@@ -302,7 +302,7 @@
             }
         })
 
-        $('.model-content tr:even td').css('background','#062955')
+        $('.model-content tr:even td').css('background','#212e3f')
 
         $('.baseparts-list li').click(function(){
             $('.model-content tr.alarmed').removeClass('alarmed');
@@ -332,6 +332,10 @@
                 $(this).parent().next().slideUp();
                 $(this).parents('.model-box').css('height','auto');
             }
+        })
+
+        $("iframe").contents().find(".record").click(function () {
+            console.log(1);
         })
 	});
 

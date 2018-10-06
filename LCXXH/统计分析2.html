@@ -38,12 +38,12 @@
 	.model-header{
 		height: 50px; 
 		line-height: 50px; 
-		background-color: #143e84;
+		background-color: #19272D;
 		color: #fff;
 		font-size: 18px;
 		border-bottom: none;   
 		padding-left: 25px;   
-		border: 1px solid #0072ff;  
+		border: 1px solid #383e46;
 		border-bottom: none;     
 		border-radius: 3px 3px 0 0;
 	}
@@ -59,8 +59,8 @@
 	}
 	.model-content{
 		height: calc(100% - 50px);
-		background: #09254c;
-		border: 1px solid #0072ff;  
+		background: #122027;
+		border: 1px solid #383e46;
 		border-top: none;   
 		position: relative;
 		overflow: auto;
@@ -166,12 +166,12 @@
 	.circle-info{
 		width: 161px;
 		height: 100%;
-		border-left:1px solid #0072ff;
+		border-left:1px solid #383e46;
 		float: left;
 	}
 	.circle-info div{
 		height: 33.33%;
-		border-bottom: 1px solid #0072ff;
+		border-bottom: 1px solid #383e46;
 		text-align: center;
 		padding: 10px 0;
 		box-sizing: border-box;
@@ -209,19 +209,19 @@
         width: 100%;
 		height: 100%;
         border-collapse: collapse;
-        background-color: #092141;
+        /*background-color: #092141;*/
     }
     .model-content th,.model-content td{
         height: 35px;
-        border: 1px solid #325ca2;
+        border: 1px solid #383e46;
         color: #fff;
         text-align: center;
     }
     .model-content th{
-        background-color: #062955;
+        background-color: #2b2f33;
     }
     .model-content tr.selected:not(:first-child) td,.model-content tr:hover:not(:first-child) td{
-        background-color: #0072ff!important;
+        background-color: #383e46!important;
         cursor: pointer;
     }
 
@@ -799,8 +799,8 @@
 			changeChartData(this);
 		})  
 
-		
-        $('.model-content tr:even td').css('background','#062955')
+
+        $('.model-content tr:even td').css('background','rgba(33,46,63,1)')
 			
 		function changeChartData(that){
 			var parents = $(that).parents('.model-box');

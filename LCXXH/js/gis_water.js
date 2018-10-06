@@ -188,42 +188,42 @@ function showPupoInfo(name) {
     var n,x,y;
     for(var i=0;i<waterData.length;i++){
         if(name=="东昌府区"&&waterData[i].xzqh=="dongchangfu"){
-            n=Math.round(Math.random()*waterData[i].data.length);
+            n=Math.round(Math.random()*(waterData[i].data.length-1));
             x=waterData[i].data[n].x;
             y=waterData[i].data[n].y;
             break;
         }else if(name=="临清市"&&waterData[i].xzqh=="linqing"){
-            n=Math.round(Math.random()*waterData[i].data.length);
+            n=Math.round(Math.random()*(waterData[i].data.length-1));
             x=waterData[i].data[n].x;
             y=waterData[i].data[n].y;
             break;
         }else if(name=="茌平县"&&waterData[i].xzqh=="chiping"){
-            n=Math.round(Math.random()*waterData[i].data.length);
+            n=Math.round(Math.random()*(waterData[i].data.length-1));
             x=waterData[i].data[n].x;
             y=waterData[i].data[n].y;
             break;
         } else if(name=="东阿县"&&waterData[i].xzqh=="donge"){
-            n=Math.round(Math.random()*waterData[i].data.length);
+            n=Math.round(Math.random()*(waterData[i].data.length-1));
             x=waterData[i].data[n].x;
             y=waterData[i].data[n].y;
             break;
         } else if(name=="冠县"&&waterData[i].xzqh=="guan"){
-            n=Math.round(Math.random()*waterData[i].data.length);
+            n=Math.round(Math.random()*(waterData[i].data.length-1));
             x=waterData[i].data[n].x;
             y=waterData[i].data[n].y;
             break;
         } else if(name=="高唐县"&&waterData[i].xzqh=="gaotang"){
-            n=Math.round(Math.random()*waterData[i].data.length);
+            n=Math.round(Math.random()*(waterData[i].data.length-1));
             x=waterData[i].data[n].x;
             y=waterData[i].data[n].y;
             break;
         } else if(name=="阳谷县"&&waterData[i].xzqh=="yanggu"){
-            n=Math.round(Math.random()*waterData[i].data.length);
+            n=Math.round(Math.random()*(waterData[i].data.length-1));
             x=waterData[i].data[n].x;
             y=waterData[i].data[n].y;
             break;
         }else if(name=="莘县"&&waterData[i].xzqh=="xin"){
-            n=Math.round(Math.random()*waterData[i].data.length);
+            n=Math.round(Math.random()*(waterData[i].data.length-1));
             x=waterData[i].data[n].x;
             y=waterData[i].data[n].y;
             break;
