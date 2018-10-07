@@ -273,7 +273,12 @@
 		$('.timely-data span').text((Math.random()*30+10).toFixed(2));					
 		line_option.series[0].data = data;
 		line_chart.setOption(line_option,true);
-	}
+
+		//gis 定位到热力图
+        if(treeNode.isParent){
+            locHeat(treeNode.name);
+        }
+        }
     
     $(function(){
 
