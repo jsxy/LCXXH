@@ -122,12 +122,12 @@
 		var currentLink = $.base64.decode(window.location.hash);
 		var target = '';
 		if (window.location.hash === '' || currentLink === 'undefined' || currentLink === '') {
-			target = $('#menu>li:nth-child(1) a');
+			target = $('#menu>li:nth-child(1)>ul li:nth-child(1) a');
 			currentLink = target.attr('link');
 		}
 		
 		if (!target.length) {
-           //target = $('li.k-item.k-state-default[link="' + currentLink + '"]').eq(0);
+        //    target = $('li.k-item.k-state-default[link="' + currentLink + '"]').eq(0);
            target = $('[link="' + currentLink + '"]').eq(0);
 		}
 

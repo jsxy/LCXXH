@@ -113,7 +113,7 @@ function addjichubujian(name) {
                 html += "<tr class='even'><td style='width:80px;'>设备名称</td><td>" + bujianname+(String.fromCharCode(65+Math.round(Math.random()*4)))+"0"+Math.round(Math.random()*4)+ "</td></tr>" +
                     "<tr class='odd'><td>位置</td><td>" + address[Math.round(Math.random()*5)] + "</td></tr><tr class='even'><td>当前值</td><td>" +Math.round(Math.random()*50) + "</td></tr><tr class='odd'><td>检测时间</td><td>" +  time[Math.round(Math.random()*5)]  + "</td></tr><tr class='even'><td>状态</td><td>" +"正常运行" + "</td></tr>";
                 html+= "</table>";
-                html+="<div class='record' onclick='checkRecord()'>"+"查看历史记录>>"+"</div>";
+                html+="<div class='record' onclick='parent.checkRecord()'>"+"查看历史记录>>"+"</div>";
                 return html;
             }
         },
@@ -264,6 +264,8 @@ function addPipe(name) {
 }
 
 
-// function checkRecord(name){
-//
-// }
+function checkRecord(name){
+    $('#_main_frame',parent.document).attr('src','历史数据.html');
+    $('#menu>li.current', parent.document).find('.current').removeClass('current');
+    $('#menu>li.current', parent.document).find('.k-item a[link="历史数据.html"]').addClass('current').parent().addClass('current'); 
+}

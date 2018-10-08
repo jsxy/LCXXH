@@ -70,7 +70,7 @@ function addjichubujian(name) {
                 html += "<tr class='even'><td style='width:90px;'>色度</td><td>" + Math.round(Math.random() * 70) + "</td></tr>" +
                     "<tr class='odd'><td>浑浊度(TPU)</td><td>" + Math.round(Math.random() * 70) + "</td></tr><tr class='even'><td>臭和味</td><td>" + Math.round(Math.random() * 70) + "</td></tr><tr class='odd'><td>肉眼可见物</td><td>" + Math.round(Math.random() * 70) + "</td></tr><tr class='even'><td>化学需氧量(mg/L)</td><td>" + Math.round(Math.random() * 70) + "</td></tr>";
                 html += "</table>";
-                html += "<div class='record'>" + "查看历史记录>>" + "</div>";
+                html += "<div class='record' onclick='parent.checkRecord()'>"  + "查看历史记录>>" + "</div>";
                 return html;
             }
         },
@@ -107,10 +107,16 @@ function showPupoInfo(name) {
             html += "<tr class='even'><td style='width:90px;'>设备名称</td><td>" +name+ "</td></tr>" +
                 "<tr class='odd'><td>位置</td><td>" +address[Math.round(Math.random()*5)]+ "</td></tr><tr class='even'><td>当前值</td><td>" +"见右侧"+ "</td></tr><tr class='odd'><td>检测时间</td><td>" + time[Math.round(Math.random()*5)]+ "</td></tr><tr class='even'><td>状态</td><td>" +"正常运行" + "</td></tr>";
             html+= "</table>";
-            html+="<div class='record'>"+"查看历史记录>>"+"</div>";
+            html+="<div class='record' onclick='parent.checkRecord()'>"+"查看历史记录>>"+"</div>";
             return html;
         }
     })
 
 
+}
+
+function checkRecord(name){
+    $('#_main_frame',parent.document).attr('src','历史数据2.html');
+    $('#menu>li.current', parent.document).find('.current').removeClass('current');
+    $('#menu>li.current', parent.document).find('.k-item a[link="历史数据2.html"]').addClass('current').parent().addClass('current'); 
 }
